@@ -17,7 +17,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -35,6 +35,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  image_picker: ^0.8.6
+  rename: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +49,16 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_svg: ^1.1.6
+  provider: ^6.0.4
+  flutter_launcher_icons: ^0.10.0
+  open_file: ^3.2.1
+  quickalert: ^1.0.0
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -60,8 +72,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icons/
-    - assets/images/
+    - assets/icons/navbar/
+    - assets/icons/unidades/
+    - assets/icons/search/
+    - assets/images/registro_unidades/
+    - assets/images/registro_viajes/
+    - assets/images/card_pressed/
+    - assets/images/home_viajero/
+    - assets/images/user_profile/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -78,10 +96,17 @@ flutter:
   fonts:
     - family: NunitoSans
       fonts:
-        - asset: fonts/NunitoSans-Bold.ttf
-        - asset: fonts/NunitoSans-SemiBold.ttf
-        - asset: fonts/NunitoSans-ExtraBold.ttf
+        - asset: fonts/NunitoSans/NunitoSans-Bold.ttf
+        - asset: fonts/NunitoSans/NunitoSans-SemiBold.ttf
+        - asset: fonts/NunitoSans/NunitoSans-ExtraBold.ttf
           weight: 800
+    - family: Kameron
+      fonts:
+        - asset: fonts/Kameron/Kameron-Bold.ttf
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat/Montserrat-Bold.ttf
+        - asset: fonts/Montserrat/Montserrat-Medium.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
