@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vitrapp/model/historial_renta.dart';
 
 import '../../../styles/colors/colors_efects.dart';
 import '../../../styles/colors/colors_input.dart';
 import '../../../styles/fontstyles/estilo_cards.dart';
 
 class CardEmpresaHistorialRenta extends StatefulWidget {
-  const CardEmpresaHistorialRenta({super.key});
+  final List<ResultsHistorialRenta> listHistorial;
+  const CardEmpresaHistorialRenta({super.key, required this.listHistorial});
 
   @override
   State<CardEmpresaHistorialRenta> createState() =>
@@ -20,8 +22,9 @@ class _CardEmpresaHistorialRentaState extends State<CardEmpresaHistorialRenta> {
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: widget.listHistorial.length,
         itemBuilder: (context, index) {
+          ResultsHistorialRenta data = widget.listHistorial[index];
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

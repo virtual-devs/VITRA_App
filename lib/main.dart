@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vitrapp/view-model/viajero_view_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
-import 'package:vitrapp/view/empresa_views/emp_home_page.dart';
+import 'package:vitrapp/view/login/login.dart';
+
+//import 'package:vitrapp/view/empresa_views/emp_home_page.dart';
 
 void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('storage');
   WidgetsFlutterBinding.ensureInitialized();
   await initialization(null);
   runApp(const MyApp());
@@ -27,7 +32,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: EmpresaHomePage(),
+        home: Login(),
       ),
     );
   }

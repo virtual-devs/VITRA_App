@@ -10,12 +10,13 @@ class Transporte {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (results != null) {
-      data['results'] = results!.map((datos) => datos.toJson()).toList();
+  Transporte.fromJsonFecha(Map<String, dynamic> json) {
+    if (json['rows'] != null) {
+      results = <Results>[];
+      json['rows'].forEach((data) {
+        results!.add(Results.fromJson(data));
+      });
     }
-    return data;
   }
 }
 
@@ -50,24 +51,10 @@ class Results {
     ac = item['aire'];
     numAsientos = item['asientos'].toString();
     urlFoto = item['imagen'];
-    modelo = item['modelo'];    
+    modelo = item['modelo'];
     precio = item['precio'].toString();
     detalles = item['detalles'];
     disponible = item['disponible'];
     id = item['id'].toString();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-
-    data['nombreEmpresa'] = nombreEmpresa;
-    data['trasmision'] = trasmision;
-    data['ac'] = ac;
-    data['numAsientos'] = numAsientos;
-    data['urlFoto'] = urlFoto;
-    data['modelo'] = modelo;
-    data['precio'] = precio;
-
-    return data;
   }
 }

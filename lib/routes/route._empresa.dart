@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:vitrapp/view/empresa_views/emp_historial.dart';
-import 'package:vitrapp/view/empresa_views/emp_home.dart';
-import 'package:vitrapp/view/empresa_views/emp_home_transporte.dart';
+
 //import 'package:vitrapp/view/transporteViws/hometransporte.dart';
 
-import '../view/empresa_views/empresa_home_viajes.dart';
-import '../view/empresa_views/registro_views/emp_registro_unidades.dart';
+import '../view/empresa_views/home/emp_home_historial.dart';
+import '../view/empresa_views/home/emp_home.dart';
+import '../view/empresa_views/home/emp_home_transporte.dart';
+import '../view/empresa_views/home/empresa_home_viajes.dart';
+import '../view/empresa_views/registro_views/emp_registro_transporte.dart';
 
 class RouteEmpresa extends StatelessWidget {
   final int index;
@@ -18,8 +19,8 @@ class RouteEmpresa extends StatelessWidget {
       EmpresaHomeViaje(),
       EmpresaHomeTransporte(),
       HomeEmpresa(),
-      EmpresaHistorial(),
-      RegistroUnidades(),
+      EmpresaHomeHistorial(),
+      RegistroTransporte(),
     ];
     return listaViews[index];
   }

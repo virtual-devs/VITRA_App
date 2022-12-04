@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vitrapp/model/transporte.dart';
+import '../../../styles/colors/colors_base.dart';
+import '../../../styles/colors/colors_card.dart';
 import '../../../styles/colors/colors_efects.dart';
 import '../../../styles/colors/colors_input.dart';
-import '../../../styles/fontstyles/estilo_cards.dart';
+// ignore: depend_on_referenced_packages
+import '../compra/renta/viajero_renta_transporte.dart';
 
 class CardViajeroHomeRenta extends StatefulWidget {
-  const CardViajeroHomeRenta({super.key});
+  final List<Results> listResults;
+  const CardViajeroHomeRenta({super.key, required this.listResults});
 
   @override
   State<CardViajeroHomeRenta> createState() => _CardViajeroHomeRentaState();
@@ -16,179 +22,146 @@ class _CardViajeroHomeRentaState extends State<CardViajeroHomeRenta> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsInput.backgroundinput,
-      body: SizedBox(
-        width: 350,
-        height: 200,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  width: 250,
-                  height: 160,
-                  decoration: const BoxDecoration(
-                    color: ColorsInput.backgroundinput,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(9),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 11,
-                        offset: Offset(0, 5),
-                        spreadRadius: -1,
-                        color: ColorBlurEfect.blur,
-                      )
-                    ],
+        body: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: widget.listResults.length,
+      itemBuilder: (context, index) {
+        Results data = widget.listResults[index];
+        return Container(
+          margin: const EdgeInsets.only(left: 10),
+          width: 350,
+          height: 270,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(15),
+            ),
+            border: Border.all(color: ColorsInput.borderinput),
+            color: Colors.white,
+          ),
+          child: Stack(
+            children: [
+              Container(
+                width: 350,
+                height: 170,
+                alignment: Alignment.centerRight,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 5),
-                              width: 200,
-                              child: const SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  'Renta de transporte Montecristo',
-                                  softWrap: false,
-                                  maxLines: 1,
-                                  style: EstilosCards.labeltitulo,
-                                  overflow: TextOverflow.clip,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                  color: Colors.amber,
+                ),
+              ),
+              Positioned(
+                left: -20,
+                bottom: 110,
+                child: Text(
+                  'VITRA',
+                  style: GoogleFonts.mPlusRounded1c(
+                    textStyle: const TextStyle(
+                      fontSize: 135,
+                      fontWeight: FontWeight.w800,
+                      color: ColorsCard.letra,
+                    ),
+                  ),
+                  softWrap: true,
+                ),
+              ),
+              Positioned(
+                bottom: 90,
+                left: 20,
+                child: SizedBox(
+                  width: 300,
+                  height: 230,
+                  child: SvgPicture.asset(
+                      'assets/images/card_pressed/card_car.svg'),
+                ),
+              ),
+              Positioned(
+                left: 85,
+                top: 130,
+                child: Container(
+                  width: 180,
+                  height: 60,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: 200,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 60,
-                              child: Text(
-                                'Nombre',
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 140,
-                              child: Text(
-                                'Fecha de renta',
-                                textAlign: TextAlign.end,
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            )
-                          ],
-                        ),
+                      color: ColorsCard.backgroundcontainerlist,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 19,
+                          offset: Offset(0, 4),
+                          color: ColorBlurEfect.blur,
+                        )
+                      ]),
+                  child: Text(
+                    '\$ ${data.precio}.00',
+                    style: GoogleFonts.mPlusRounded1c(
+                      textStyle: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: ColorsBase.colorsecundario,
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 1),
-                        width: 200,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 90,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  'Erik Toledo Trinidad',
-                                  style: EstilosCards.labelsecundarios,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  '22/10/2022',
-                                  textAlign: TextAlign.center,
-                                  style: EstilosCards.labelsecundarios,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: 200,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 200,
-                              child: Text(
-                                'Dias de renta',
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 1),
-                        width: 200,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 100,
-                              child: Text(
-                                '3',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                style: EstilosCards.labelsecundarios,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: 180,
-                        height: 40,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 10,
-                              height: 10,
-                              child: SvgPicture.asset(
-                                  'assets/icons/unidades/simbolo_peso.svg'),
-                            ),
-                            const SizedBox(
-                              child: Text(
-                                '1500.00',
-                                overflow: TextOverflow.ellipsis,
-                                style: EstilosCards.labelprecio,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-    
+              ),
+              Positioned(
+                top: 185,
+                left: 15,
+                child: Text(
+                  '${data.modelo}',
+                  style: GoogleFonts.mPlusRounded1c(
+                    textStyle: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w800,
+                      color: ColorsBase.colorprimario,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 220,
+                left: 15,
+                child: Text(
+                  '${data.detalles}',
+                  style: GoogleFonts.mPlusRounded1c(
+                    textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: ColorsBase.colorprimario,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 250,
+                left: 190,
+                child: Container(
+                  width: 150,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Route route = MaterialPageRoute(
+                        builder: (context) => ViajeroRentaTransporte(
+                          dataItem: data,
+                        ),
+                      );
+                      Navigator.push(context, route);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                    ),
+                    child: const Text('¡Rentar ahora!'),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    ));
   }
 }

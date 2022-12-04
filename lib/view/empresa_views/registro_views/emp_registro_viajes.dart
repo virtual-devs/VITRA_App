@@ -1,10 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:vitrapp/styles/colors/colors_base.dart';
-import 'package:vitrapp/styles/colors/colors_efects.dart';
-import 'package:vitrapp/styles/colors/colors_input.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:vitrapp/styles/colors/colors_base.dart';
+import 'package:vitrapp/styles/colors/colors_input.dart';
+// ignore: depend_on_referenced_packages
+import '../../../alerts/viajero/error.dart';
+import '../../../alerts/viajero/error_post.dart';
+import '../../../alerts/viajero/ok.dart';
 import '../../../styles/colors/colors_botons.dart';
 import '../../../styles/fontstyles/estilo_forms.dart';
+import '../../../view-model/viajero_view_model.dart';
 
 class RegistroViajes extends StatefulWidget {
   const RegistroViajes({super.key});
@@ -14,10 +20,17 @@ class RegistroViajes extends StatefulWidget {
 }
 
 class _RegistroViajesState extends State<RegistroViajes> {
+  final storage = Hive.box('storage');
+  ViajeroViewModel viajeroViewModel = ViajeroViewModel();
   TimeOfDay tiempo = const TimeOfDay(hour: 10, minute: 20);
   DateTime fecha = DateTime(2022, 05, 11);
   bool change = false;
+  bool completed = false;
   bool changeWidget = false;
+  final controllerOrigen = TextEditingController();
+  final controllerDestino = TextEditingController();
+  final controllerAsientos = TextEditingController();
+  final controllerPrecio = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,54 +84,12 @@ class _RegistroViajesState extends State<RegistroViajes> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 30, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      'Imagen',
-                      style: EstiloLabelsFormulario.labelsprimariosunidades,
-                    )
-                  ],
-                ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 170,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 9,
-                          color: ColorBlurEfect.blur,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      border: Border.all(color: ColorsInput.borderinput),
-                      color: ColorsInput.backgroundinput,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.image,
-                        size: 34,
-                      ),
-                      onPressed: () {},
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    height: 340,
+                    margin: const EdgeInsets.only(top: 105),
+                    height: 430,
                     width: 350,
                     child: SingleChildScrollView(
                       child: Column(
@@ -148,6 +119,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
                                   ),
                                 ),
                                 child: TextField(
+                                  controller: controllerOrigen,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ColorsInput.backgroundinput,
@@ -191,6 +163,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
                                   ),
                                 ),
                                 child: TextField(
+                                  controller: controllerDestino,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ColorsInput.backgroundinput,
@@ -311,6 +284,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
                                   ),
                                 ),
                                 child: TextField(
+                                  controller: controllerAsientos,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     filled: true,
@@ -356,6 +330,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
                                   ),
                                 ),
                                 child: TextField(
+                                  controller: controllerPrecio,
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ColorsInput.backgroundinput,
@@ -388,7 +364,42 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             borderRadius: BorderRadius.circular(15)),
                         backgroundColor: ColorsBotons.registro,
                       ),
-                      onPressed: () => {},
+                      onPressed: () => {
+                        if (verficar(
+                          storage.get(5).toString(),
+                          controllerOrigen.text,
+                          controllerDestino.text,
+                          "${fecha.year} ,${fecha.month} ,${fecha.day}",
+                          controllerAsientos.text,
+                          "auto.jpg",
+                          "${tiempo.hour}:${tiempo.minute}",
+                          "${controllerPrecio.text}.00",
+                        ))
+                          {
+                            viajeroViewModel
+                                .vmPostViajes(
+                              jsonBody(
+                                storage.get(5).toString(),
+                                controllerOrigen.text,
+                                controllerDestino.text,
+                                "${fecha.year} ,${fecha.month} ,${fecha.day}",
+                                controllerAsientos.text,
+                                "auto.jpg",
+                                "${tiempo.hour}:${tiempo.minute}",
+                                "${controllerPrecio.text}.00",
+                              ),
+                            )
+                                .then((value) {
+                              if (value == "200") {
+                                showMesajeOkViajero(context);
+                              } else {
+                                showMesajeErroPostViajero(context);
+                              }
+                            }),
+                          }
+                        else
+                          {showMesajeErrorViajero(context)}
+                      },
                       child: const Text(
                         'Registrar',
                         textAlign: TextAlign.center,
@@ -447,11 +458,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
         child: Text(
           '${tiempo.hour}:${tiempo.minute}',
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontFamily: 'Kameron',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: EstiloLabelsFormulario.labeldate,
         ),
       ),
     );
@@ -467,6 +474,56 @@ class _RegistroViajesState extends State<RegistroViajes> {
   }
 
   Future<TimeOfDay?> getTiempo() {
-    return showTimePicker(context: context, initialTime: TimeOfDay.now());
+    return showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+  }
+
+  String jsonBody(
+    String id,
+    String origen,
+    String destino,
+    String fecha,
+    String asientos,
+    String imagen,
+    String hora,
+    String precio,
+  ) {
+    final body = {
+      "idEmpresa": id,
+      "origen": origen,
+      "destino": destino,
+      "fecha": fecha,
+      "hora": hora,
+      "precio": double.parse(precio),
+      "asientos": int.parse(asientos),
+      "asientosDisp": int.parse(asientos),
+      "imagen": imagen
+    };
+    return jsonEncode(body);
+  }
+
+  bool verficar(
+    String id,
+    String origen,
+    String destino,
+    String fecha,
+    String asientos,
+    String imagen,
+    String hora,
+    String precio,
+  ) {
+    return (id.isNotEmpty &&
+            origen.isNotEmpty &&
+            destino.isNotEmpty &&
+            fecha.isNotEmpty &&
+            asientos.isNotEmpty &&
+            imagen.isNotEmpty &&
+            hora.isNotEmpty &&
+            precio.isNotEmpty &&
+            int.parse(asientos) > 0)
+        ? true
+        : false;
   }
 }

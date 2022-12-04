@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:vitrapp/model/historial_viajes.dart';
 import 'package:vitrapp/styles/colors/colors_card.dart';
 import 'package:vitrapp/styles/colors/colors_efects.dart';
 import 'package:vitrapp/styles/fontstyles/estilo_cards.dart';
 
 class CardHistorialViaje extends StatefulWidget {
-  const CardHistorialViaje({super.key});
+  final List<ResultsHistorialViaje> listResults;
+  const CardHistorialViaje({super.key, required this.listResults});
 
   @override
   State<CardHistorialViaje> createState() => _CardHistorialViajeState();
@@ -15,8 +17,9 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: widget.listResults.length,
         itemBuilder: (context, index) {
+          ResultsHistorialViaje data = widget.listResults[index];
           return Column(
             children: [
               Container(
@@ -45,8 +48,8 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(top: 5),
-                          child: const Text(
-                            'Viajes Tuxtla Gtz - Pichucalco',
+                          child: Text(
+                            '${data.nombreEmpresa}',
                             style: EstilosCards.labeltitulo,
                           ),
                         )
@@ -92,8 +95,8 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                               width: 135,
                               child: Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  'Erik Toledo Trinidad',
+                                child: Text(
+                                  '${data.nombre}',
                                   overflow: TextOverflow.ellipsis,
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
@@ -107,8 +110,8 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                               width: 135,
                               child: Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  '24/10/2022',
+                                child: Text(
+                                  '${data.fecha}',
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
                               ),
@@ -137,9 +140,9 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
-                          children: const [
+                          children: [
                             Text(
-                              '12:59',
+                              '${data.hora}',
                               overflow: TextOverflow.ellipsis,
                               style: EstilosCards.labelsecundariocolor,
                             ),
@@ -190,8 +193,8 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  '26/11/2022',
+                                child: Text(
+                                  '${data.fechaSalida}',
                                   overflow: TextOverflow.ellipsis,
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
@@ -203,9 +206,9 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                           width: 135,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
-                                '16:56',
+                                '${data.horaSalida}',
                                 style: EstilosCards.labelsecundariocolor,
                               ),
                             ],
@@ -248,18 +251,15 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                     ),
                     Row(
                       children: [
-                        SizedBox(
+                        Container(
                           width: 135,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  'Tuxtla Gutierrez',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: EstilosCards.labelsecundariocolor,
-                                ),
+                              Text(
+                                '${data.origen}',
+                                overflow: TextOverflow.ellipsis,
+                                style: EstilosCards.labelsecundariocolor,
                               ),
                             ],
                           ),
@@ -268,9 +268,9 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                           width: 135,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
-                                'Pichucalco',
+                                '${data.destino}',
                                 overflow: TextOverflow.ellipsis,
                                 style: EstilosCards.labelsecundariocolor,
                               ),

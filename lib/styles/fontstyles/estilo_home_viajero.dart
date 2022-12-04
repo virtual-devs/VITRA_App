@@ -25,4 +25,15 @@ abstract class EstiloLabelsHomeViajero {
     fontSize: 30,
     fontWeight: FontWeight.bold,
   );
+  static const TextStyle encabezados2 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle fecha = TextStyle(
+    fontFamily: 'Kameron',
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
 }

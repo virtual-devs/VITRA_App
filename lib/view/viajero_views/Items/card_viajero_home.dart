@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:vitrapp/model/viajes.dart';
 import 'package:vitrapp/styles/colors/colors_efects.dart';
 import 'package:vitrapp/styles/colors/colors_input.dart';
-import 'package:vitrapp/styles/fontstyles/estilo_cards.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../styles/colors/colors_base.dart';
+import '../../../styles/colors/colors_card.dart';
+import '../../../styles/fontstyles/estilo_barra_busqueda.dart';
+import '../compra/renta/viajero_compra_viaje.dart';
+
 class CardViajeroHome extends StatefulWidget {
-  const CardViajeroHome({super.key});
+  final List<ResultsViajes> listaViajes;
+  const CardViajeroHome({super.key, required this.listaViajes});
 
   @override
   State<CardViajeroHome> createState() => _CardViajeroHomeState();
@@ -16,215 +24,175 @@ class _CardViajeroHomeState extends State<CardViajeroHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsInput.backgroundinput,
-      body: SizedBox(
-        width: 350,
-        height: 200,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  width: 200,
-                  height: 160,
-                  decoration: const BoxDecoration(
-                    color: ColorsInput.backgroundinput,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(9),
+      body: (widget.listaViajes.isNotEmpty)
+          ? ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.listaViajes.length,
+              itemBuilder: (context, index) {
+                ResultsViajes data = widget.listaViajes[index];
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  width: 350,
+                  height: 270,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(15),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 11,
-                          offset: Offset(0, 5),
-                          spreadRadius: -1,
-                          color: ColorBlurEfect.blur)
-                    ],
+                    border: Border.all(color: ColorsInput.borderinput),
+                    color: Colors.white,
                   ),
-                  child: Column(
+                  child: Stack(
                     children: [
-                      SizedBox(
-                        width: 200,
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 5),
-                              width: 180,
-                              child: const SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  'Viajes Tuxtla Gtz - Pichucalco',
-                                  softWrap: false,
-                                  maxLines: 1,
-                                  style: EstilosCards.labeltitulo,
-                                  overflow: TextOverflow.clip,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: 180,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 90,
-                              child: Text(
-                                'Origen',
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 90,
-                              child: Text(
-                                'Destino',
-                                textAlign: TextAlign.center,
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            )
-                          ],
+                        width: 350,
+                        height: 170,
+                        alignment: Alignment.centerRight,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          color: Colors.amber,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 1),
-                        width: 180,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 90,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  'Tuxtla Gtz.',
-                                  style: EstilosCards.labelsecundarios,
-                                ),
-                              ),
+                      Positioned(
+                        left: -20,
+                        bottom: 88,
+                        child: Text(
+                          'VITRA',
+                          style: GoogleFonts.mPlusRounded1c(
+                            textStyle: const TextStyle(
+                              fontSize: 135,
+                              fontWeight: FontWeight.w800,
+                              color: ColorsCard.letra,
                             ),
-                            SizedBox(
-                              width: 90,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  'Pichucalco',
-                                  textAlign: TextAlign.center,
-                                  style: EstilosCards.labelsecundarios,
-                                ),
-                              ),
-                            )
-                          ],
+                          ),
+                          softWrap: true,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: 180,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 60,
-                              child: Text(
-                                'Fecha',
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 60,
-                              child: Text(
-                                'Hora',
-                                textAlign: TextAlign.center,
-                                style: EstilosCards.labelsprimarios,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 60,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  'Asientos disponibles',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: EstilosCards.labelsprimarios,
-                                ),
-                              ),
-                            ),
-                          ],
+                      Positioned(
+                        bottom: 110,
+                        left: 50,
+                        child: SizedBox(
+                          width: 300,
+                          height: 180,
+                          child: SvgPicture.asset(
+                              'assets/images/card_pressed/card_viaje.svg'),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 1),
-                        width: 180,
-                        height: 20,
-                        child: Row(
-                          children: const [
-                            SizedBox(
-                              width: 60,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  '24/11/2022',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: EstilosCards.labelsecundarios,
-                                ),
+                      Positioned(
+                        left: 85,
+                        top: 130,
+                        child: Container(
+                          width: 180,
+                          height: 60,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                              color: ColorsCard.backgroundcontainerlist,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  offset: Offset(0, 4),
+                                  color: ColorBlurEfect.blur,
+                                )
+                              ]),
+                          child: Text(
+                            '\$ ${data.precio}.00',
+                            style: GoogleFonts.mPlusRounded1c(
+                              textStyle: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w800,
+                                color: ColorsBase.colorsecundario,
                               ),
                             ),
-                            SizedBox(
-                              width: 60,
-                              child: Text(
-                                '14:22',
-                                textAlign: TextAlign.center,
-                                style: EstilosCards.labelsecundarios,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 60,
-                              child: Text(
-                                '2',
-                                textAlign: TextAlign.center,
-                                style: EstilosCards.labelsecundarios,
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        width: 180,
-                        height: 40,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 10,
-                              height: 10,
-                              child: SvgPicture.asset(
-                                  'assets/icons/unidades/simbolo_peso.svg'),
-                            ),
-                            const SizedBox(
-                              child: Text(
-                                '400.00',
-                                overflow: TextOverflow.ellipsis,
-                                style: EstilosCards.labelprecio,
+                      Positioned(
+                        top: 185,
+                        left: 15,
+                        child: SizedBox(
+                          width: 240,
+                          child: Text(
+                            '${data.origen}',
+                            style: GoogleFonts.mPlusRounded1c(
+                              textStyle: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w800,
+                                color: ColorsBase.colorprimario,
                               ),
                             ),
-                          ],
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
+                      Positioned(
+                        top: 220,
+                        left: 15,
+                        child: SizedBox(
+                          width: 200,
+                          child: Text(
+                            '${data.destino}',
+                            style: GoogleFonts.mPlusRounded1c(
+                              textStyle: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: ColorsBase.colorprimario,
+                              ),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 240,
+                        left: 160,
+                        child: Container(
+                          width: 180,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Route route = MaterialPageRoute(
+                                  builder: (context) =>
+                                      ViajeroCompraViaje(item: data));
+                              Navigator.push(context, route);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: const StadiumBorder(),
+                            ),
+                            child: const Text('¡Aparta un lugar ahora!'),
+                          ),
+                        ),
+                      )
                     ],
                   ),
+                );
+              },
+            )
+          : SizedBox(
+              width: 350,
+              height: 480,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      height: 200,
+                      child: Lottie.asset('assets/gif/109013-oopsie.json'),
+                    ),
+                    const Text(
+                      '¡Opss, parece que no hay ningun viaje!',
+                      style: EstiloBarraBusqueda.labelbarrabusqueda,
+                    ),
+                  ],
                 ),
-              ],
-            );
-          },
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

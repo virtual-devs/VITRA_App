@@ -8,4 +8,5 @@ class ColorsInput {
 
 class ColorsSearchInput {
   static const Color backgroundinput = Color.fromRGBO(241, 242, 241, 1);
+  static const Color label = Color.fromRGBO(191, 191, 191, 1);
 }

@@ -48,7 +48,7 @@ abstract class EstiloCardPresionada {
   );
   static const TextStyle labelubicacion = TextStyle(
     fontFamily: 'NunitoSans',
-    fontSize: 8,
+    fontSize: 10,
     fontWeight: FontWeight.w600,
   );
   static const TextStyle labelssimilares = TextStyle(
@@ -61,7 +61,7 @@ abstract class EstiloCardPresionada {
     fontFamily: 'NunitoSans',
     fontWeight: FontWeight.bold,
     fontSize: 25,
-    color: ColorsBase.colorsecundario,
+    color: ColorsBase.colorprimario,
   );
   static const TextStyle labelaviso = TextStyle(
     fontFamily: 'NunitoSans',

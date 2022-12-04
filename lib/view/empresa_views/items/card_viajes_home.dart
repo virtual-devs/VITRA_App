@@ -19,7 +19,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
     return Scaffold(
       body: Container(
         width: 350,
-        height: 558,
+        height: 358,
         alignment: Alignment.topCenter,
         decoration: const BoxDecoration(
           color: Colors.white,

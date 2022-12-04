@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vitrapp/model/historial_viajes.dart';
 
 import '../../../styles/colors/colors_card.dart';
 import '../../../styles/colors/colors_efects.dart';
 import '../../../styles/fontstyles/estilo_cards.dart';
 
 class CardEmpresaHistorialViaje extends StatefulWidget {
-  const CardEmpresaHistorialViaje({super.key});
+  final List<ResultsHistorialViaje> listViajes;
+  const CardEmpresaHistorialViaje({super.key, required this.listViajes});
 
   @override
   State<CardEmpresaHistorialViaje> createState() =>
@@ -17,8 +19,9 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: widget.listViajes.length,
         itemBuilder: (context, index) {
+          ResultsHistorialViaje data = widget.listViajes[index];
           return Column(
             children: [
               Container(

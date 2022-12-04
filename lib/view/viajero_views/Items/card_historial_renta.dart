@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vitrapp/model/historial_renta.dart';
 import '../../../styles/colors/colors_efects.dart';
 import '../../../styles/colors/colors_input.dart';
 import '../../../styles/fontstyles/estilo_cards.dart';
@@ -6,7 +7,8 @@ import '../../../styles/fontstyles/estilo_cards.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CardHistorialRenta extends StatefulWidget {
-  const CardHistorialRenta({super.key});
+  final List<ResultsHistorialRenta> listResults;
+  const CardHistorialRenta({super.key, required this.listResults});
 
   @override
   State<CardHistorialRenta> createState() => _CardHistorialRentaState();
@@ -18,13 +20,14 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: widget.listResults.length,
         itemBuilder: (context, index) {
+          ResultsHistorialRenta data = widget.listResults[index];
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: (index != 4)
+                margin: (index != (widget.listResults.length - 1))
                     ? const EdgeInsets.only(top: 10)
                     : const EdgeInsets.only(top: 10, bottom: 10),
                 width: 250,
@@ -50,11 +53,11 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                       width: 250,
                       height: 20,
                       child: Row(
-                        children: const [
+                        children:  [
                           SizedBox(
                             width: 250,
                             child: Text(
-                              'Renta de transporte Montecristo',
+                              '${data.nombreEmpresa}',
                               textAlign: TextAlign.center,
                               style: EstiloLabelsHistorial.titulo,
                             ),
@@ -92,13 +95,13 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                       height: 20,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          SizedBox(
+                        children: [
+                           SizedBox(
                             width: 90,
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
-                                'Erik Toledo Trinidad',
+                                '${data.nombre}',
                                 style: EstiloLabelsHomeEmpresa.secundarios,
                               ),
                             ),
@@ -108,7 +111,7 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
-                                '22/10/2022',
+                                '${data.fecha}',
                                 style: EstiloLabelsHomeEmpresa.secundarios,
                               ),
                             ),
@@ -135,11 +138,11 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                       width: 200,
                       height: 20,
                       child: Row(
-                        children: const [
+                        children: [
                           SizedBox(
                             width: 60,
                             child: Text(
-                              '4',
+                              '${data.dias}',
                               textAlign: TextAlign.center,
                               style: EstilosCards.labelsecundarios,
                             ),
@@ -163,11 +166,11 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                               height: 15,
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 120,
                             height: 30,
                             child: Text(
-                              '400.00',
+                              '${data.total}.00',
                               style: EstilosCards.labelprecio,
                             ),
                           ),
