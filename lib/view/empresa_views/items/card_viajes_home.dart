@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vitrapp/util/convert_size.dart';
 
 import '../../../styles/colors/colors_card.dart';
 import '../../../styles/colors/colors_efects.dart';
@@ -16,10 +17,12 @@ class CardViajesHome extends StatefulWidget {
 class _CardViajesHomeState extends State<CardViajesHome> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        width: 350,
-        height: 358,
+        width: convertWidth(width, 350),
+        height: convertHeight(height, 358),
         alignment: Alignment.topCenter,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -37,8 +40,8 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                   margin: (index != 4)
                       ? const EdgeInsets.only(left: 10, top: 10)
                       : const EdgeInsets.only(left: 10, top: 10, right: 10),
-                  width: 270,
-                  height: 200,
+                  width: convertWidth(width, 270),
+                  height: convertHeight(height, 200),
                   decoration: const BoxDecoration(
                     color: ColorsCard.background,
                     borderRadius: BorderRadius.all(
@@ -59,7 +62,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                         children: [
                           Container(
                             alignment: Alignment.center,
-                            width: 260,
+                            width: convertWidth(width, 260),
                             margin: const EdgeInsets.only(top: 5),
                             child: const SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
@@ -78,7 +81,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 135,
+                              width: convertWidth(width, 135),
                               child: Row(
                                 children: [
                                   Container(
@@ -92,7 +95,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                               ),
                             ),
                             SizedBox(
-                              width: 135,
+                              width: convertWidth(width, 135),
                               child: Row(
                                 children: const [
                                   Text(
@@ -110,7 +113,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                           Row(
                             children: [
                               SizedBox(
-                                width: 135,
+                                width: convertWidth(width, 135),
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 18),
                                   child: const Text(
@@ -125,7 +128,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                           Row(
                             children: [
                               SizedBox(
-                                width: 135,
+                                width: convertWidth(width, 135),
                                 child: Container(
                                   margin: const EdgeInsets.only(left: 18),
                                   child: const Text(
@@ -143,7 +146,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 90,
+                              width: convertWidth(width, 90),
                               child: Row(
                                 children: [
                                   Container(
@@ -157,7 +160,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                               ),
                             ),
                             SizedBox(
-                              width: 90,
+                              width: convertWidth(width, 90),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -172,17 +175,21 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                               ),
                             ),
                             SizedBox(
-                              width: 75,
-                              height: 40,
+                              width: convertWidth(width, 75),
+                              height: convertHeight(height, 40),
                               child: Column(
                                 children: [
                                   Container(
+                                    height: convertHeight(height, 40),
                                     margin: const EdgeInsets.only(left: 10),
-                                    child: const Text(
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.fade,
-                                      'Asientos disp.',
-                                      style: EstilosCards.labelsprimarios,
+                                    child: const SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Text(
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.fade,
+                                        'Asientos disp.',
+                                        style: EstilosCards.labelsprimarios,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -194,7 +201,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                       Row(
                         children: [
                           SizedBox(
-                            width: 100,
+                            width: convertWidth(width, 100),
                             child: Row(
                               children: [
                                 Container(
@@ -209,7 +216,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                             ),
                           ),
                           SizedBox(
-                            width: 90,
+                            width: convertWidth(width, 90),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -221,7 +228,7 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                             ),
                           ),
                           SizedBox(
-                            width: 60,
+                            width: convertWidth(width, 60),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -244,8 +251,8 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                                 Column(
                                   children: [
                                     SizedBox(
-                                      width: 10,
-                                      height: 10,
+                                      width: convertWidth(width, 10),
+                                      height: convertHeight(height, 10),
                                       child: SvgPicture.asset(
                                           'assets/icons/unidades/simbolo_peso.svg'),
                                     )
@@ -256,8 +263,8 @@ class _CardViajesHomeState extends State<CardViajesHome> {
                                   children: [
                                     Container(
                                       alignment: Alignment.center,
-                                      width: 100,
-                                      height: 40,
+                                      width: convertWidth(width, 100),
+                                      height: convertHeight(height, 40),
                                       child: const Text(
                                         '300.00',
                                         style: EstilosCards.labelprecio,

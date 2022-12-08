@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vitrapp/view-model/viajero_view_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
-import 'package:vitrapp/view/login/login.dart';
+import 'package:vitrapp/view/splash_view/splash_init.dart';
 
 //import 'package:vitrapp/view/empresa_views/emp_home_page.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Login(),
+        home: SplasInit(),
       ),
     );
   }

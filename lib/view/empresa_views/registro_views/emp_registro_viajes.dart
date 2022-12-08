@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:vitrapp/styles/colors/colors_base.dart';
 import 'package:vitrapp/styles/colors/colors_input.dart';
+import 'package:vitrapp/util/convert_size.dart';
+
 // ignore: depend_on_referenced_packages
 import '../../../alerts/viajero/error.dart';
 import '../../../alerts/viajero/error_post.dart';
@@ -33,6 +35,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
   final controllerPrecio = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SingleChildScrollView(
@@ -43,8 +47,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
             children: [
               Container(
                 alignment: Alignment.centerLeft,
-                width: 400,
-                height: 40,
+                width: convertWidth(width, 400),
+                height: convertHeight(height, 40),
                 child: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -57,13 +61,13 @@ class _RegistroViajesState extends State<RegistroViajes> {
                 ),
               ),
               SizedBox(
-                width: 350,
-                height: 50,
+                width: convertWidth(width, 350),
+                height: convertHeight(height, 50),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      height: 100,
+                      height: convertHeight(height, 100),
                       child: Row(
                         children: const [
                           Text(
@@ -88,9 +92,9 @@ class _RegistroViajesState extends State<RegistroViajes> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 105),
-                    height: 430,
-                    width: 350,
+                    margin: EdgeInsets.only(top: margin(height, 105)),
+                    height: convertHeight(height, 430),
+                    width: convertWidth(width, 350),
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
@@ -110,8 +114,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 10),
-                                width: 350,
-                                height: 60,
+                                width: convertWidth(width, 350),
+                                height: convertHeight(height, 60),
                                 decoration: const BoxDecoration(
                                   color: ColorsInput.backgroundinput,
                                   borderRadius: BorderRadius.all(
@@ -137,10 +141,10 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             margin: const EdgeInsets.only(top: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 SizedBox(
-                                  width: 340,
-                                  child: Text(
+                                  width: convertWidth(width, 340),
+                                  child: const Text(
                                     'Destino',
                                     style: EstiloLabelsFormulario
                                         .labelsprimariosunidades,
@@ -154,8 +158,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 10),
-                                width: 350,
-                                height: 60,
+                                width: convertWidth(width, 350),
+                                height: convertHeight(height, 60),
                                 decoration: const BoxDecoration(
                                   color: ColorsInput.backgroundinput,
                                   borderRadius: BorderRadius.all(
@@ -182,9 +186,9 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const SizedBox(
-                                  width: 115,
-                                  child: Text(
+                                SizedBox(
+                                  width: convertWidth(width, 115),
+                                  child: const Text(
                                     'Fecha',
                                     style: EstiloLabelsFormulario
                                         .labelsprimariosunidades,
@@ -192,16 +196,16 @@ class _RegistroViajesState extends State<RegistroViajes> {
                                 ),
                                 Container(
                                   alignment: Alignment.center,
-                                  width: 115,
+                                  width: convertWidth(width, 115),
                                   child: const Text(
                                     'Hora',
                                     style: EstiloLabelsFormulario
                                         .labelsprimariosunidades,
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 115,
-                                  child: Text(
+                                SizedBox(
+                                  width: convertWidth(width, 115),
+                                  child: const Text(
                                     'Num de asientos',
                                     textAlign: TextAlign.center,
                                     style: EstiloLabelsFormulario
@@ -216,8 +220,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(top: 10),
-                                width: 115,
-                                height: 60,
+                                width: convertWidth(width, 115),
+                                height: convertHeight(height, 60),
                                 decoration: BoxDecoration(
                                   color: ColorsInput.backgroundinput,
                                   borderRadius: const BorderRadius.all(
@@ -242,12 +246,12 @@ class _RegistroViajesState extends State<RegistroViajes> {
                                           });
                                         },
                                       )
-                                    : mostrarfecha(),
+                                    : mostrarfecha(width, height),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 10),
-                                width: 113,
-                                height: 60,
+                                width: convertWidth(width, 113),
+                                height: convertHeight(height, 60),
                                 decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -275,8 +279,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 10),
-                                width: 113,
-                                height: 60,
+                                width: convertWidth(width, 113),
+                                height: convertHeight(height, 60),
                                 decoration: const BoxDecoration(
                                   color: ColorsInput.backgroundinput,
                                   borderRadius: BorderRadius.all(
@@ -303,7 +307,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 5),
-                            width: 340,
+                            width: convertWidth(width, 350),
                             child: Row(
                               children: const [
                                 SizedBox(
@@ -320,9 +324,10 @@ class _RegistroViajesState extends State<RegistroViajes> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(top: 10),
-                                width: 340,
-                                height: 60,
+                                margin:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                width: convertWidth(width, 340),
+                                height: convertHeight(height, 60),
                                 decoration: const BoxDecoration(
                                   color: ColorsInput.backgroundinput,
                                   borderRadius: BorderRadius.all(
@@ -356,8 +361,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 30),
-                    width: 220,
-                    height: 60,
+                    width: convertWidth(width, 220),
+                    height: convertHeight(height, 60),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -365,6 +370,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
                         backgroundColor: ColorsBotons.registro,
                       ),
                       onPressed: () => {
+                        debugPrint(height.toString()),
                         if (verficar(
                           storage.get(5).toString(),
                           controllerOrigen.text,
@@ -416,7 +422,7 @@ class _RegistroViajesState extends State<RegistroViajes> {
     );
   }
 
-  Widget mostrarfecha() {
+  Widget mostrarfecha(double width, double height) {
     return InkWell(
       onTap: () async {
         DateTime? nuevaFecha = await getDate();
@@ -427,8 +433,8 @@ class _RegistroViajesState extends State<RegistroViajes> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 115,
-        height: 60,
+        width: convertWidth(width, 115),
+        height: convertHeight(height, 60),
         child: Text(
           '${fecha.day}/${fecha.month}/${fecha.year}',
           textAlign: TextAlign.center,

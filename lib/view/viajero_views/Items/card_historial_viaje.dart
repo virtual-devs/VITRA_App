@@ -3,6 +3,7 @@ import 'package:vitrapp/model/historial_viajes.dart';
 import 'package:vitrapp/styles/colors/colors_card.dart';
 import 'package:vitrapp/styles/colors/colors_efects.dart';
 import 'package:vitrapp/styles/fontstyles/estilo_cards.dart';
+import 'package:vitrapp/util/convert_size.dart';
 
 class CardHistorialViaje extends StatefulWidget {
   final List<ResultsHistorialViaje> listResults;
@@ -15,6 +16,8 @@ class CardHistorialViaje extends StatefulWidget {
 class _CardHistorialViajeState extends State<CardHistorialViaje> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView.builder(
         itemCount: widget.listResults.length,
@@ -23,11 +26,11 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
           return Column(
             children: [
               Container(
-                margin: (index != 4)
+                margin: (index != (widget.listResults.length - 1))
                     ? const EdgeInsets.only(top: 10)
                     : const EdgeInsets.only(top: 10, bottom: 10),
-                width: 270,
-                height: 230,
+                width: convertWidth(width, 270),
+                height: convertHeight(height, 252),
                 decoration: const BoxDecoration(
                     color: ColorsCard.background,
                     borderRadius: BorderRadius.all(
@@ -60,7 +63,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 135,
+                            width: convertHeight(height, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -74,7 +77,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                             ),
                           ),
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: const [
                                 Text(
@@ -92,7 +95,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                         Row(
                           children: [
                             SizedBox(
-                              width: 135,
+                              width: convertWidth(width, 135),
                               child: Container(
                                 margin: const EdgeInsets.only(left: 18),
                                 child: Text(
@@ -107,7 +110,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                         Row(
                           children: [
                             SizedBox(
-                              width: 135,
+                              width: convertWidth(width, 135),
                               child: Container(
                                 margin: const EdgeInsets.only(left: 18),
                                 child: Text(
@@ -155,7 +158,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -169,7 +172,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                             ),
                           ),
                           SizedBox(
-                            width: 135,
+                           width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -188,7 +191,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             children: [
                               Container(
@@ -203,7 +206,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                           ),
                         ),
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -221,7 +224,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -235,7 +238,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                             ),
                           ),
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -251,8 +254,8 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                     ),
                     Row(
                       children: [
-                        Container(
-                          width: 135,
+                        SizedBox(
+                          width: convertWidth(width, 135),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -265,7 +268,7 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                           ),
                         ),
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -273,6 +276,22 @@ class _CardHistorialViajeState extends State<CardHistorialViaje> {
                                 '${data.destino}',
                                 overflow: TextOverflow.ellipsis,
                                 style: EstilosCards.labelsecundariocolor,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text(
+                                '\$${data.total}.00',
+                                overflow: TextOverflow.ellipsis,
+                                style: EstilosCards.labelprecio,
                               ),
                             ],
                           ),

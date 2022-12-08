@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:vitrapp/model/historial_renta.dart';
 import 'package:vitrapp/model/login.dart';
+import 'package:vitrapp/model/perfil.dart';
 import 'package:vitrapp/model/viajes.dart';
 import 'package:vitrapp/repository/repository.dart';
 
@@ -18,6 +19,8 @@ class ViajeroViewModel with ChangeNotifier {
 
   ApiResponseViajes<Viajes> getViajesResponse = ApiResponseViajes.loading();
 
+  ApiResponsePerfil<Perfil> getPerfilResponse = ApiResponsePerfil.loading();
+
   ApiResponseViajes<Viajes> getViajesFechaResponse =
       ApiResponseViajes.loading();
 
@@ -30,6 +33,11 @@ class ViajeroViewModel with ChangeNotifier {
 /*-------------------------------------Metodos--------------------------------------*/
   setAutoListResponse(ApiResponse<Transporte> response) {
     getTransportesResponse = response;
+    notifyListeners();
+  }
+
+  setPerfilResponse(ApiResponsePerfil<Perfil> responseP) {
+    getPerfilResponse = responseP;
     notifyListeners();
   }
 
@@ -65,6 +73,7 @@ class ViajeroViewModel with ChangeNotifier {
 
 /*-------------------------------------GET'S--------------------------------------*/
   Future<void> vmGetTransportes() async {
+    getTransportesResponse = ApiResponse.loading();
     await empresa.getAutos().then((value) {
       setAutoListResponse(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
@@ -76,11 +85,16 @@ class ViajeroViewModel with ChangeNotifier {
     });
   }
 
+  Future<void> vmGetPerfil(String id) async {
+    await empresa.getPerfil(id).then((value) {
+      setPerfilResponse(ApiResponsePerfil.completed(value));
+    });
+  }
+
   Future<void> vmGetTransportesId(String id) async {
     await empresa.getTransporteEmpresa(id).then((value) {
       setAutoListResponse(ApiResponse.completed(value));
     }).onError((error, stackTrace) {
-      debugPrint(error.toString());
       setAutoListResponse(
         ApiResponse.error(
           error.toString(),
@@ -171,6 +185,7 @@ class ViajeroViewModel with ChangeNotifier {
   }
 
   Future<void> vmGetViajes() async {
+    getViajesResponse = ApiResponseViajes.loading();
     await empresa.getViajes().then((value) {
       setListViajesResponse(ApiResponseViajes.completed(value));
     }).onError((error, stackTrace) {
@@ -185,17 +200,13 @@ class ViajeroViewModel with ChangeNotifier {
 /*-------------------------------------POST's--------------------------------------*/
   Future<String> vmPostTransporte(String data) async {
     String code = "";
-    await empresa.postTransporte(data).then((value) {
-      code = value;
-    }).onError(
-      (error, stackTrace) {
-        setAutoListResponse(
-          ApiResponse.error(
-            error.toString(),
-          ),
-        );
-      },
-    );
+    try {
+      await empresa.postTransporte(data).then((value) {
+        code = value;
+      });
+    } catch (e) {
+      rethrow;
+    }
     return code;
   }
 
@@ -209,22 +220,33 @@ class ViajeroViewModel with ChangeNotifier {
     return response;
   }
 
-  Future<String> vmPostHistorialV(String data) async {
+  Future<String> vmPostHistorialV(
+      String data, String id, String asientos, String dataE) async {
     String statusCode = "";
-    await empresa.postHistorialV(data).then((value) {
+    await empresa.postHistorialV(data, id, asientos, dataE).then((value) {
       statusCode = value;
     }).onError((error, stackTrace) {});
     return statusCode;
   }
 
-  Future<String> vmPostHistorialR(String data) async {
+  Future<String> vmPostHistorialR(String data, String id, String dataE) async {
     String statusCodeR = "";
-    await empresa.postHistorialR(data).then((value) {
+    await empresa.postHistorialR(data, id, dataE).then((value) {
       statusCodeR = value;
     }).onError((error, stackTrace) {});
     return statusCodeR;
   }
 /*-------------------------------------PUT's--------------------------------------*/
+
+  Future<String> vmLogout() async {
+    String code = "";
+    try {
+      await empresa.logout().then((value) => code = value);
+    } catch (e) {
+      rethrow;
+    }
+    return code;
+  }
 
   Future<String> vmPutViaje(String id, String body) async {
     getViajesResponse = ApiResponseViajes.loading();
@@ -248,6 +270,18 @@ class ViajeroViewModel with ChangeNotifier {
     });
 
     return codePT;
+  }
+
+  Future<String> vmPutPerfil(String body, String id) async {
+    String code = "";
+    try {
+      await empresa.putPerfil(body, id).then((value) {
+        code = value;
+      });
+    } catch (e) {
+      rethrow;
+    }
+    return code;
   }
 
   /*-------------------------------------DELETE's--------------------------------------*/

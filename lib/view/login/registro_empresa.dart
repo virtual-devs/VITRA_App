@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitrapp/styles/colors/colors_efects.dart';
 import 'package:vitrapp/styles/fontstyles/estilo_registro.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/login/parseo.dart';
 import 'package:vitrapp/view/login/registro_viajero.dart';
 
@@ -24,6 +25,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
   final controlleremail = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -31,7 +34,6 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
           child: Column(
             children: [
               Container(
-                height: 230,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
@@ -76,13 +78,13 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                 ]),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 90),
-                width: 300,
-                height: 70,
+                margin: EdgeInsets.only(top: margin(height, 90)),
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 70),
                 child: Row(children: [
                   SizedBox(
-                    width: 40,
-                    height: 70,
+                    width: convertWidth(width, 40),
+                    height: convertHeight(height, 70),
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Icon(
@@ -93,8 +95,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                   ),
                   Container(
                     alignment: Alignment.bottomCenter,
-                    width: 260,
-                    height: 50,
+                    width: convertWidth(width, 259),
+                    height: convertHeight(height, 50),
                     child: TextField(
                       controller: controlleruser,
                       textAlignVertical: TextAlignVertical.bottom,
@@ -113,12 +115,12 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                 ]),
               ),
               SizedBox(
-                width: 300,
-                height: 70,
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 70),
                 child: Row(children: [
                   SizedBox(
-                    width: 40,
-                    height: 70,
+                    width: convertWidth(width, 40),
+                    height: convertHeight(height, 70),
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Icon(
@@ -129,8 +131,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                   ),
                   Container(
                     alignment: Alignment.bottomCenter,
-                    width: 260,
-                    height: 50,
+                    width: convertWidth(width, 259),
+                    height: convertHeight(height, 50),
                     child: TextField(
                       controller: controlleremail,
                       keyboardType: TextInputType.emailAddress,
@@ -150,13 +152,13 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                 ]),
               ),
               SizedBox(
-                width: 300,
-                height: 70,
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 70),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 40,
-                      height: 70,
+                      width: convertWidth(width, 40),
+                      height: convertHeight(height, 70),
                       child: Container(
                         alignment: Alignment.centerLeft,
                         child: const Icon(
@@ -167,8 +169,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                     ),
                     Container(
                       alignment: Alignment.bottomCenter,
-                      width: 220,
-                      height: 50,
+                      width: convertWidth(width, 220),
+                      height: convertHeight(height, 50),
                       child: TextField(
                         controller: controllerpassword,
                         obscureText: _isvisible,
@@ -186,8 +188,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                       ),
                     ),
                     SizedBox(
-                      width: 40,
-                      height: 50,
+                      width: convertWidth(width, 40),
+                      height: convertHeight(height, 50),
                       child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -209,23 +211,23 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                 ),
               ),
               SizedBox(
-                width: 350,
-                height: 70,
+                width: convertWidth(width, 350),
+                height: convertHeight(height, 70),
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 350,
+                      width: convertWidth(width, 350),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 193,
+                            width: convertWidth(width, 193),
                             child: Text(
                               'Al registrarse, acepta nuestros',
                               style: EstiloLabelsRegistro.avisoPrimario,
                             ),
                           ),
                           SizedBox(
-                            width: 150,
+                            width: convertWidth(width, 150),
                             child: InkWell(
                               onTap: (() {}),
                               child: Text(
@@ -245,11 +247,11 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                       ),
                     ),
                     SizedBox(
-                      width: 350,
+                      width: convertWidth(width, 350),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 150,
+                            width: convertWidth(width, 150),
                             child: InkWell(
                               onTap: () {},
                               child: Text(
@@ -266,8 +268,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 50),
-                width: 300,
-                height: 50,
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 50),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: ElevatedButton(
@@ -307,8 +309,8 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 50),
-                width: 121,
-                height: 30,
+                width: convertWidth(width, 123),
+                height: convertHeight(height, 30),
                 child: InkWell(
                   onTap: () {
                     Route route = MaterialPageRoute(

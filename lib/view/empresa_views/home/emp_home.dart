@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/empresa_views/items/card_renta_home.dart';
 
 import '../../../styles/colors/colors_efects.dart';
@@ -20,6 +21,8 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
   final storage = Hive.box('storage');
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SizedBox(
@@ -29,8 +32,8 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 70,
-                  width: 350,
+                  height: convertHeight(height, 70),
+                  width: convertWidth(width, 350),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -51,7 +54,7 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                             child: const CircleAvatar(
                               radius: 25,
                               backgroundImage: AssetImage(
-                                'assets/images/user_profile/profile.jpg',
+                                'assets/images/avatar/avatar_empresa.png',
                               ),
                             ),
                           ),
@@ -64,15 +67,15 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 350,
-                      height: 100,
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 103),
                       child: Row(
                         children: [
                           Column(
                             children: [
                               SizedBox(
-                                width: 245,
-                                height: 100,
+                                width: convertWidth(width, 246),
+                                height: convertHeight(height, 102),
                                 child: Column(
                                   children: [
                                     Row(
@@ -80,8 +83,8 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                                         Container(
                                           margin: const EdgeInsets.only(
                                               top: 10, right: 5),
-                                          width: 190,
-                                          height: 70,
+                                          width: convertWidth(width, 190),
+                                          height: convertHeight(height, 70),
                                           child: SingleChildScrollView(
                                             child: Text(
                                               '${storage.get(1)}',
@@ -93,17 +96,17 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                                         ),
                                         Image.asset(
                                           'assets/images/home_viajero/hv_saludo.png',
-                                          width: 50,
-                                          height: 50,
+                                          width: convertWidth(width, 50),
+                                          height: convertHeight(height, 50),
                                         )
                                       ],
                                     ),
                                     Row(
-                                      children: const [
+                                      children: [
                                         SizedBox(
-                                          width: 200,
-                                          height: 20,
-                                          child: Text(
+                                          width: convertWidth(width, 200),
+                                          height: convertHeight(height, 20),
+                                          child: const Text(
                                             'Bienvenido a VITRA',
                                             style: EstiloLabelsHomeViajero
                                                 .bienvenida,
@@ -126,8 +129,8 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 5),
-                      height: 50,
-                      width: 350,
+                      height: convertHeight(height, 50),
+                      width: convertWidth(width, 350),
                       child: const Text(
                         'Rentas de hoy',
                         style: EstiloLabelsHomeViajero.encabezados,
@@ -137,21 +140,21 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
-                      width: 350,
-                      height: 200,
-                      child: CardRentaHome(),
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 200),
+                      child: const CardRentaHome(),
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
-                      height: 40,
-                      width: 350,
-                      child: Text(
+                      height: convertHeight(height, 40),
+                      width: convertWidth(width, 350),
+                      child: const Text(
                         'Viajes de hoy',
                         style: EstiloLabelsHomeViajero.encabezados,
                       ),
@@ -160,11 +163,11 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
-                      width: 350,
-                      height: 220,
-                      child: CardViajesHome(),
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 220),
+                      child: const CardViajesHome(),
                     ),
                   ],
                 ),

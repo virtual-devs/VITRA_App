@@ -28,6 +28,20 @@ class NetworkApiService extends BaseApiServices {
   }
 
   @override
+  Future getApiUsuario(String id) async {
+    dynamic responseUsuario;
+    try {
+      final responseE = await http.get(
+        Uri.parse("http://3.213.253.209/perfil/$id"),
+      );
+      responseUsuario = jsonDecode(jsonEncode([returnResponse(responseE)]));
+    } on SocketException {
+      throw FetchDataException(mensajeSocketExeption);
+    }
+    return responseUsuario;
+  }
+
+  @override
   Future getApiTransporteEmpresa(String id) async {
     dynamic responseJsonEmpresa;
     try {
@@ -42,7 +56,7 @@ class NetworkApiService extends BaseApiServices {
   }
 
   @override
-  Future getGetApiViajesEmpresa(String id) async {
+  Future getApiViajesEmpresa(String id) async {
     dynamic responseJsonEmpresa;
     try {
       final responseE = await http.get(
@@ -60,7 +74,7 @@ class NetworkApiService extends BaseApiServices {
     dynamic responseJson;
     try {
       final response = await http.get(
-        Uri.parse("http://44.212.111.181/rentas"),
+        Uri.parse("http://44.212.111.181/rentasDisponibles"),
       );
       responseJson = returnResponse(response);
     } on SocketException {
@@ -102,7 +116,7 @@ class NetworkApiService extends BaseApiServices {
     dynamic responseApiViajes;
     try {
       final response = await http.get(
-        Uri.parse("http://44.212.111.181/viajes"),
+        Uri.parse("http://44.212.111.181/viajesDisponibles"),
       );
       responseApiViajes = returnResponse(response);
     } on SocketException {
@@ -190,7 +204,8 @@ class NetworkApiService extends BaseApiServices {
   }
 
   @override
-  Future postApiHistorialViajes(String body) async {
+  Future postApiHistorialViajes(
+      String body, String id, String asientos, String dataE) async {
     dynamic estatusCode;
     try {
       final responsePHV = await http.post(
@@ -201,12 +216,22 @@ class NetworkApiService extends BaseApiServices {
 
       final responsePHM = await http.post(
         Uri.parse('http://44.212.111.181/historialVAdd'),
+        body: dataE,
+        headers: header(),
+      );
+
+      final responsePNA = await http.put(
+        Uri.parse('http://44.212.111.181/viajesUpdate/$id/$asientos'),
         body: body,
         headers: header(),
       );
-      estatusCode = (responsePHV.statusCode == responsePHM.statusCode)
+      debugPrint(
+          "update ${responsePHV.statusCode}${responsePHM.statusCode}${responsePNA.statusCode}");
+      estatusCode = (responsePHV.statusCode == 200 &&
+              responsePHM.statusCode == 200 &&
+              responsePNA.statusCode == 200)
           ? "200"
-          : "${responsePHV.statusCode} ${responsePHM.statusCode}";
+          : "Error interno";
     } on SocketException {
       throw FetchDataException(mensajeSocketExeption);
     }
@@ -214,7 +239,7 @@ class NetworkApiService extends BaseApiServices {
   }
 
   @override
-  Future postApiHistorialRentas(String body) async {
+  Future postApiHistorialRentas(String body, String id, String dataE) async {
     dynamic estatusCodeR;
 
     try {
@@ -225,12 +250,20 @@ class NetworkApiService extends BaseApiServices {
       );
       final responseHMR = await http.post(
         Uri.parse('http://44.212.111.181/historialRAdd'),
+        body: dataE,
+        headers: header(),
+      );
+
+      final responsePCE = await http.put(
+        Uri.parse('http://44.212.111.181/rentaDispUpdate/$id'),
         body: body,
         headers: header(),
       );
-      estatusCodeR = (responseHRV.statusCode == responseHMR.statusCode)
+      estatusCodeR = (responseHRV.statusCode == 200 &&
+              responseHMR.statusCode == 200 &&
+              responsePCE.statusCode == 200)
           ? "200"
-          : "${responseHRV.statusCode} ${responseHRV.statusCode}";
+          : "Error interno";
     } on SocketException {
       throw FetchDataException(mensajeSocketExeption);
     }
@@ -269,6 +302,23 @@ class NetworkApiService extends BaseApiServices {
   }
 
   /*------------------------------PUT's----------------------------------------------*/
+
+  @override
+  Future logut() async {
+    dynamic response;
+    try {
+      final responseLogut = await http.put(
+          Uri.parse(
+            'http://3.213.253.209/logout',
+          ),
+          headers: header());
+      response = responseLogut.statusCode.toString();
+    } on SocketException {
+      throw FetchDataException(mensajeSocketExeption);
+    }
+    return response;
+  }
+
   @override
   Future putActulizarTransporte(String id, String body) async {
     dynamic responsePutR;
@@ -301,6 +351,23 @@ class NetworkApiService extends BaseApiServices {
     return responsePutV;
   }
 
+  @override
+  Future putApiPerfil(String body, String id) async {
+    dynamic responsePutP;
+    try {
+      final responsePV = await http.put(
+        Uri.parse('http://3.213.253.209/usuarioUpdate/$id'),
+        body: body,
+        headers: header(),
+      );
+      debugPrint(responsePV.statusCode.toString());
+      responsePutP = "${responsePV.statusCode}";
+    } on SocketException {
+      throw FetchDataException(mensajeSocketExeption);
+    }
+    return responsePutP;
+  }
+
   /*------------------------------POST'S REGISTER----------------------------------------------*/
   @override
   Future postRegistro(String body) async {
@@ -310,6 +377,18 @@ class NetworkApiService extends BaseApiServices {
       final response = await http.post(
         Uri.parse("http://3.213.253.209/signUp"),
         body: body,
+        headers: headerLogin(),
+      );
+
+      final perfil = (jsonDecode(response.body));
+      await http.post(
+        Uri.parse("http://3.213.253.209/usuarioAdd"),
+        body: jsonEncode({
+          'idUsuario': perfil["id"],
+          'nombre': perfil['username'],
+          'telefono': null,
+          'direccion': null
+        }),
         headers: headerLogin(),
       );
       code = response.statusCode.toString();

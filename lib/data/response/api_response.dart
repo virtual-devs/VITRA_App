@@ -104,3 +104,24 @@ class ApiResponseLogin<L> {
     return "Status: $status \n Message:$message \n Data: $data \n";
   }
 }
+
+class ApiResponsePerfil<P> {
+  Status? status;
+  P? data;
+  String? message;
+
+  ApiResponsePerfil(this.status, this.data, this.message);
+
+  ApiResponsePerfil.loading() : status = Status.LOADING;
+
+  ApiResponsePerfil.initial() : status = Status.INITIAL;
+
+  ApiResponsePerfil.completed(this.data) : status = Status.COMPLETED;
+
+  ApiResponsePerfil.error(this.message) : status = Status.ERROR;
+
+  @override
+  String toString() {
+    return "Status: $status \n Message:$message \n Data: $data \n";
+  }
+}

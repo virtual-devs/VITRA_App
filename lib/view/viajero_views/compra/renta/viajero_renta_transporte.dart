@@ -1,7 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
+import 'package:vitrapp/model/perfil.dart';
 import 'package:vitrapp/model/transporte.dart';
 import 'package:vitrapp/styles/colors/colors_base.dart';
 import 'package:vitrapp/styles/colors/colors_botons.dart';
@@ -14,7 +15,10 @@ import 'package:slide_to_act/slide_to_act.dart';
 import 'package:quickalert/quickalert.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:vitrapp/util/convert_size.dart';
+import 'package:vitrapp/view/alerts/empresa/alerts_renta.dart';
+import 'package:http/http.dart' as http;
+import '../../../../data/response/status.dart';
 import '../../../../styles/colors/colors_input.dart';
 import '../../../../view-model/viajero_view_model.dart';
 
@@ -33,9 +37,42 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
   final controllerDiasRentas = TextEditingController();
   final storage = Hive.box('storage');
   ViajeroViewModel addHistorial = ViajeroViewModel();
+
+  @override
+  void initState() {
+    addHistorial.vmGetPerfil(widget.dataItem.nombreEmpresa!);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Results data = widget.dataItem;
+    
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return ChangeNotifierProvider<ViajeroViewModel>(
+      create: (context) => addHistorial,
+      child: Consumer<ViajeroViewModel>(
+        builder: (context, value, child) {
+          switch (value.getPerfilResponse.status!) {
+            case Status.LOADING:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            case Status.COMPLETED:
+              return body(data, value.getPerfilResponse.data!.response![0],width,height);
+
+            case Status.ERROR:
+              return const Text('');
+            case Status.INITIAL:
+              return const Text('');
+          }
+        },
+      ),
+    );
+  }
+
+  Widget body(Results data, ResultsPerfil perfil,double width,double height) {
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -44,7 +81,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
             child: Column(
               children: [
                 SizedBox(
-                  width: 400,
+                  width: convertWidth(width, 400),
                   child: Row(
                     children: [
                       SizedBox(
@@ -63,7 +100,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                   ),
                 ),
                 Container(
-                  width: 350,
+                  width: convertWidth(width, 350),
                   margin: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     children: [
@@ -87,10 +124,10 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                       Container(
                         margin: const EdgeInsets.only(left: 28),
                         alignment: Alignment.center,
-                        width: 200,
-                        height: 100,
+                        width: convertWidth(width, 200),
+                        height: convertHeight(height, 100),
                         child: Text(
-                          "${data.id}",
+                          "${perfil.nombre}",
                           overflow: TextOverflow.fade,
                           style: EstiloCardPresionada.labelnombrempresa,
                         ),
@@ -102,8 +139,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 350,
-                      height: 250,
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 250),
                       decoration: const BoxDecoration(
                         color: ColorsCard.backgroundcardpresionada,
                         borderRadius: BorderRadius.all(
@@ -122,8 +159,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                           Row(
                             children: [
                               SizedBox(
-                                width: 200,
-                                height: 250,
+                                width: convertWidth(width, 200),
+                                height: convertHeight(height, 250),
                                 child: Column(
                                   children: [
                                     Column(
@@ -131,8 +168,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                          width: 200,
-                                          height: 170,
+                                          width: convertWidth(width, 200),
+                                          height: convertHeight(height, 170),
                                           child: SvgPicture.asset(
                                               'assets/images/card_pressed/card_car.svg'),
                                         ),
@@ -141,8 +178,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                     Column(
                                       children: [
                                         SizedBox(
-                                          width: 200,
-                                          height: 80,
+                                          width: convertWidth(width, 200),
+                                          height: convertHeight(height, 80),
                                           child: Column(
                                             children: [
                                               Container(
@@ -156,8 +193,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                     Column(
                                                       children: [
                                                         SizedBox(
-                                                          width: 20,
-                                                          height: 20,
+                                                          width: convertWidth(width, 20),
+                                                          height: convertHeight(height, 20),
                                                           child:
                                                               SvgPicture.asset(
                                                             'assets/icons/unidades/car.svg',
@@ -168,7 +205,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                       ],
                                                     ),
                                                     SizedBox(
-                                                      width: 170,
+                                                      width: convertWidth(width, 170),
                                                       child: Text(
                                                         '${data.modelo}',
                                                         style:
@@ -180,7 +217,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                width: 200,
+                                                width: convertWidth(width, 200),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -190,11 +227,11 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .center,
-                                                      children: const [
+                                                      children:  [
                                                         SizedBox(
-                                                          width: 30,
-                                                          height: 40,
-                                                          child: Icon(Icons
+                                                          width: convertWidth(width, 30),
+                                                          height: convertHeight(height, 40),
+                                                          child:const Icon(Icons
                                                               .location_on),
                                                         )
                                                       ],
@@ -202,12 +239,17 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                     Container(
                                                       alignment:
                                                           Alignment.center,
-                                                      height: 50,
-                                                      width: 168,
+                                                      height: convertHeight(height, 50),
+                                                      width: convertWidth(width, 168),
                                                       child:
-                                                          const SingleChildScrollView(
+                                                          SingleChildScrollView(
                                                         child: Text(
-                                                          'Calle Segunda Pte. Nte. 342-2, Niño de Atocha, 29037 Tuxtla Gutiérrez, Chis.',
+                                                          (perfil.direccion
+                                                                      ?.compareTo(
+                                                                          'null') ==
+                                                                  0)
+                                                              ? 'Sin direccion alguna'
+                                                              : '${perfil.direccion}',
                                                           overflow:
                                                               TextOverflow.fade,
                                                           style:
@@ -228,8 +270,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                 ),
                               ),
                               SizedBox(
-                                width: 150,
-                                height: 250,
+                                width: convertWidth(width, 150),
+                                height: convertHeight(height, 250),
                                 child: Column(
                                   children: [
                                     Container(
@@ -239,8 +281,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                           Column(
                                             children: [
                                               SizedBox(
-                                                width: 30,
-                                                height: 30,
+                                                width: convertWidth(width, 30),
+                                                height: convertHeight(height, 30),
                                                 child: SvgPicture.asset(
                                                   'assets/icons/unidades/asiento.svg',
                                                   color: ColorsBase
@@ -273,8 +315,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                           Column(
                                             children: [
                                               SizedBox(
-                                                width: 30,
-                                                height: 30,
+                                                width: convertWidth(width, 30),
+                                                height: convertHeight(height, 30),
                                                 child: SvgPicture.asset(
                                                   'assets/icons/unidades/cambio.svg',
                                                   color: ColorsBase
@@ -307,8 +349,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                           Column(
                                             children: [
                                               SizedBox(
-                                                width: 25,
-                                                height: 25,
+                                                width: convertWidth(width, 25),
+                                                height: convertHeight(height, 25),
                                                 child: SvgPicture.asset(
                                                   'assets/icons/unidades/ac.svg',
                                                   color: ColorsBase
@@ -334,8 +376,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 130,
-                                      height: 40,
+                                      width: convertWidth(width, 130),
+                                      height: convertHeight(height, 40),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -345,8 +387,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               SizedBox(
-                                                width: 15,
-                                                height: 15,
+                                                width: convertWidth(width, 15),
+                                                height: convertHeight(height, 15),
                                                 child: SvgPicture.asset(
                                                   'assets/icons/unidades/simbolo_peso.svg',
                                                   color:
@@ -360,7 +402,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               SizedBox(
-                                                width: 100,
+                                                width: convertWidth(width, 100),
                                                 child: Text(
                                                   '${data.precio}.00',
                                                   style: EstiloCardPresionada
@@ -375,11 +417,11 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children:  [
                                         SizedBox(
-                                          width: 100,
-                                          height: 22,
-                                          child: Text(
+                                          width: convertWidth(width, 100),
+                                          height: convertHeight(height, 22),
+                                          child:const Text(
                                             'Precio proporcionado es unicamente por día',
                                             overflow: TextOverflow.fade,
                                             style:
@@ -388,18 +430,34 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: 125,
-                                          height: 50,
-                                          child: Image.asset(
-                                            'assets/images/card_pressed/cp_logo_paypal.png',
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: convertWidth(width, 125),
+                                            height: convertHeight(height, 50),
+                                            child: (perfil.direccion
+                                                        ?.compareTo('null') ==
+                                                    0)
+                                                ? const Text(
+                                                    'Sin telefono alguno',
+                                                    overflow: TextOverflow.fade,
+                                                    style: EstiloCardPresionada
+                                                        .labelubicacion,
+                                                  )
+                                                : IconButton(
+                                                    onPressed: () async {},
+                                                    icon: const Icon(
+                                                      Icons.whatsapp,
+                                                      color: Colors.green,
+                                                    ),
+                                                  ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
@@ -413,16 +471,16 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 20, bottom: 10),
-                  width: 350,
-                  height: 50,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 50),
                   child: Row(
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children:  [
                           SizedBox(
-                            width: 100,
-                            child: Text(
+                            width: convertWidth(width, 100),
+                            child:const Text(
                               'Dias de renta',
                               style: EstiloCardPresionada.labeldiasrenta,
                             ),
@@ -432,8 +490,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                       Column(
                         children: [
                           SizedBox(
-                            width: 250,
-                            height: 50,
+                            width: convertWidth(width, 250),
+                            height: convertHeight(height, 50),
                             child: TextField(
                               controller: controllerDiasRentas,
                               decoration: InputDecoration(
@@ -454,7 +512,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                   ),
                 ),
                 SizedBox(
-                  width: 350,
+                  width: convertWidth(width, 350),
                   child: Row(
                     children: const [
                       Text(
@@ -465,15 +523,15 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                   ),
                 ),
                 Container(
-                  width: 350,
+                  width: convertWidth(width, 350),
                   margin: const EdgeInsets.only(top: 10),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           alignment: Alignment.center,
-                          width: 350,
-                          height: 100,
+                          width: convertWidth(width, 350),
+                          height: convertHeight(height, 100),
                           decoration: const BoxDecoration(
                             color: ColorsCard.backgroundcardpresionada,
                             borderRadius: BorderRadius.all(
@@ -489,8 +547,8 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                             ],
                           ),
                           child: SizedBox(
-                            width: 320,
-                            height: 80,
+                            width: convertWidth(width, 320),
+                            height: convertHeight(height, 80),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Text(
@@ -506,13 +564,13 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30),
-                  width: 350,
+                  width: convertWidth(width, 350),
                   child: Row(
                     children: [
                       Column(
                         children: [
                           SizedBox(
-                            width: 350,
+                            width: convertWidth(width, 350),
                             child: SlideAction(
                               sliderRotate: false,
                               text: 'Desliza para rentar',
@@ -522,10 +580,11 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
                                 Icons.payment,
                                 color: ColorsPago.terceario,
                               ),
-                              onSubmit: () {
+                              onSubmit: () async {
                                 if (validar(controllerDiasRentas.text)) {
                                   showConfirmarCompra(data, addHistorial,
-                                      controllerDiasRentas.text);
+                                      controllerDiasRentas.text, perfil);
+                                  await addHistorial.vmGetTransportes();
                                 } else {
                                   showMensajeError();
                                 }
@@ -545,19 +604,6 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
     );
   }
 
-  void showConfirmation() {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      title: 'Hecho',
-      text: '¡Renta realizada exitosamente!',
-      onConfirmBtnTap: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      },
-    );
-  }
-
   bool validar(String dias) {
     return (dias.isNotEmpty && (int.parse(dias) > 0)) ? true : false;
   }
@@ -568,6 +614,7 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
       type: QuickAlertType.error,
       title: 'Oops...',
       text: '¡El numero de dias no es valido!',
+      confirmBtnText: 'Aceptar',
       onConfirmBtnTap: () {
         Navigator.pop(context);
         Navigator.pop(context);
@@ -593,37 +640,40 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
     });
   }
 
-  void post(
-      Results data, ViajeroViewModel addHistorial, double total, int dias) {
+  void post(Results data, ViajeroViewModel addHistorial, double total, int dias,
+      ResultsPerfil perfil) {
     DateTime fecha = DateTime.now();
 
     addHistorial
-        .vmPostHistorialR(parseo(
-      int.parse(storage.get(5)),
-      "${data.nombreEmpresa}",
-      storage.get(1).toString(),
-      "${fecha.year}-${fecha.month}-${fecha.day}",
-      dias,
-      total,
-    ))
+        .vmPostHistorialR(
+            parseo(
+              int.parse(storage.get(5)),
+              "${perfil.nombre}",
+              storage.get(1).toString(),
+              "${fecha.year}-${fecha.month}-${fecha.day}",
+              dias,
+              total,
+            ),
+            "${data.id}",
+            parseo(
+              int.parse("${data.nombreEmpresa}"),
+              "${data.nombreEmpresa}",
+              storage.get(1).toString(),
+              "${fecha.year}-${fecha.month}-${fecha.day}",
+              dias,
+              total,
+            ))
         .then((value) {
-      (value == "200") ? showConfirmation() : showMensajeErrorPost(value);
+      (value == "200")
+          ? showConfirmationRenta(context)
+          : showMensajeErrorPostRenta(context, value);
     }).onError((error, stackTrace) {
-      showMensajeErrorPost(error.toString());
+      showMensajeErrorPostRenta(context, error.toString());
     });
   }
 
-  void showMensajeErrorPost(String codigo) {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.error,
-      title: 'Oops...',
-      text: '¡Ha ocurrido un error: $codigo!',
-    );
-  }
-
-  void showConfirmarCompra(
-      Results data, ViajeroViewModel addHistorial, String dias) {
+  void showConfirmarCompra(Results data, ViajeroViewModel addHistorial,
+      String dias, ResultsPerfil perfil) {
     double total = double.parse("${data.precio}.00") * int.parse(dias);
     QuickAlert.show(
       context: context,
@@ -634,8 +684,12 @@ class _ViajeroRentaTransporteState extends State<ViajeroRentaTransporte> {
       confirmBtnText: 'Comprar',
       cancelBtnText: 'Cancelar',
       onConfirmBtnTap: () {
-        post(data, addHistorial, total, int.parse(dias));
+        post(data, addHistorial, total, int.parse(dias), perfil);
         Navigator.pop(context);
+      },
+      onCancelBtnTap: () {
+        Navigator.pop(context);
+        showMensajeCancelRenta(context);
       },
       confirmBtnColor: Colors.green,
     );

@@ -8,6 +8,7 @@ import 'package:vitrapp/styles/fontstyles/estilo_titulo_vitra.dart';
 import 'package:vitrapp/styles/fontstyles/estilo_barra_busqueda.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/alerts/no_data_viajes.dart';
 import 'package:vitrapp/view/viajero_views/Items/card_lista_viajes.dart';
 import '../../../data/response/status.dart';
@@ -37,6 +38,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -48,7 +51,7 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 20),
                   child: SizedBox(
-                    width: 350,
+                    width: convertWidth(width, 350),
                     child: Row(
                       children: [
                         Column(
@@ -95,8 +98,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 50,
-                    width: 350,
+                    width: convertWidth(width, 350),
+                    height: convertHeight(height, 50),
                     decoration: const BoxDecoration(
                       color: ColorsSearchInput.backgroundinput,
                       borderRadius: BorderRadius.all(
@@ -107,10 +110,10 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
-                              width: 250,
-                              child: Text(
+                              width: convertWidth(width, 250),
+                              child: const Text(
                                 '¡Encuentra tu viaje ideal!',
                                 textAlign: TextAlign.center,
                                 style: EstiloBarraBusqueda.labelbarrabusqueda,
@@ -122,16 +125,17 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 100,
+                              width: convertWidth(width, 100),
                               child: Row(
                                 children: [
                                   Column(
                                     children: [
                                       SizedBox(
-                                        width: 40,
+                                        width: convertWidth(width, 40),
                                         child: IconButton(
                                           onPressed: () =>
-                                              _showModalBottomSheet(context),
+                                              _showModalBottomSheet(
+                                                  context, width, height),
                                           icon: SvgPicture.asset(
                                             'assets/icons/search/filter.svg',
                                             height: 23,
@@ -143,10 +147,10 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                                     ],
                                   ),
                                   Column(
-                                    children: const [
+                                    children: [
                                       SizedBox(
-                                        width: 50,
-                                        child: Text(
+                                        width: convertHeight(height, 50),
+                                        child: const Text(
                                           'Filtros',
                                           style:
                                               EstiloBarraBusqueda.labelfiltro,
@@ -174,8 +178,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 10),
-                      width: 350,
-                      height: 558,
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 558),
                       alignment: Alignment.topCenter,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -225,7 +229,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
     );
   }
 
-  void _showModalBottomSheet(BuildContext context) {
+  void _showModalBottomSheet(
+      BuildContext context, double width, double height) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -243,7 +248,7 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
               minChildSize: 0.32,
               builder: (context, scrollController) => SingleChildScrollView(
                 controller: scrollController,
-                child: showModalSheet(setState),
+                child: showModalSheet(setState, width, height),
               ),
             );
           },
@@ -252,7 +257,7 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
     );
   }
 
-  Widget showModalSheet(StateSetter state) {
+  Widget showModalSheet(StateSetter state, double width, double height) {
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       clipBehavior: Clip.none,
@@ -260,8 +265,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
         Positioned(
           top: -15,
           child: Container(
-            width: 60,
-            height: 7,
+            width: convertWidth(width, 60),
+            height: convertHeight(height, 7),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
@@ -274,14 +279,14 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
           children: [
             Container(
               margin: const EdgeInsets.only(top: 40),
-              width: 350,
-              height: 350,
+              width: convertWidth(width, 350),
+              height: convertHeight(height, 350),
               child: Column(
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 10),
-                    width: 350,
-                    height: 60,
+                    width: convertWidth(width, 350),
+                    height: convertHeight(height, 60),
                     decoration: const BoxDecoration(
                       color: ColorsInput.backgroundinput,
                       borderRadius: BorderRadius.all(
@@ -305,8 +310,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 10),
-                    width: 350,
-                    height: 60,
+                    width: convertWidth(width, 350),
+                    height: convertHeight(height, 60),
                     decoration: const BoxDecoration(
                       color: ColorsInput.backgroundinput,
                       borderRadius: BorderRadius.all(
@@ -330,8 +335,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 10),
-                    width: 350,
-                    height: 60,
+                    width: convertWidth(width, 350),
+                    height: convertHeight(height, 60),
                     decoration: BoxDecoration(
                       color: ColorsInput.backgroundinput,
                       borderRadius: const BorderRadius.all(
@@ -342,8 +347,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 100,
-                          height: 60,
+                          width: convertWidth(width, 100),
+                          height: convertHeight(height, 60),
                           child: IconButton(
                             icon: const Icon(Icons.calendar_month),
                             onPressed: () async {
@@ -357,8 +362,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                         ),
                         Container(
                           alignment: Alignment.center,
-                          width: 248,
-                          height: 60,
+                          width: convertWidth(width, 248),
+                          height: convertHeight(height, 60),
                           child: Text(
                             "${fecha.day}/${fecha.month}/${fecha.year}",
                             style: EstiloLabelsHomeViajero.fecha,
@@ -369,8 +374,8 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 60),
-                    width: 300,
-                    height: 50,
+                    width: convertWidth(width, 300),
+                    height: convertHeight(height, 50),
                     child: ElevatedButton(
                       onPressed: () {
                         var origen = controllerOrigen.text;

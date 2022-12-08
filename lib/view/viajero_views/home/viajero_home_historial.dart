@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:vitrapp/styles/colors/colors_tab_bar.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/viajero_views/Items/card_historial_renta.dart';
 import 'package:vitrapp/view/viajero_views/Items/card_historial_viaje.dart';
 
@@ -33,6 +34,8 @@ class _ViajeroHomeHistorialState extends State<ViajeroHomeHistorial> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -58,8 +61,8 @@ class _ViajeroHomeHistorialState extends State<ViajeroHomeHistorial> {
                     Column(
                       children: [
                         SizedBox(
-                          width: 350,
-                          height: 600,
+                          width: convertWidth(width, 350),
+                          height: convertHeight(height, 600),
                           child: ChangeNotifierProvider<ViajeroViewModel>.value(
                             value: viajeroViewModelHR,
                             child: Consumer<ViajeroViewModel>(
@@ -100,8 +103,8 @@ class _ViajeroHomeHistorialState extends State<ViajeroHomeHistorial> {
                     Column(
                       children: [
                         SizedBox(
-                          width: 350,
-                          height: 600,
+                          width: convertWidth(width, 350),
+                          height: convertHeight(height, 600),
                           child: ChangeNotifierProvider<ViajeroViewModel>.value(
                             value: viajeroViewModelHR,
                             child: Consumer<ViajeroViewModel>(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view-model/viajero_view_model.dart';
 import 'package:vitrapp/view/login/parseo.dart';
 import 'package:vitrapp/view/login/registro_empresa.dart';
@@ -24,6 +25,8 @@ class _RegistroViajeroState extends State<RegistroViajero> {
   final controlleremail = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
@@ -31,6 +34,7 @@ class _RegistroViajeroState extends State<RegistroViajero> {
           child: Column(
             children: [
               Container(
+                height: convertWidth(width, 240),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
@@ -51,8 +55,7 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                     child: Image.asset(
                       'assets/images/registro/viajero.jpg',
                       width: double.infinity,
-                      height: 230,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                   Positioned(
@@ -80,12 +83,12 @@ class _RegistroViajeroState extends State<RegistroViajero> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 90),
-                width: 300,
-                height: 70,
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 70),
                 child: Row(children: [
                   SizedBox(
-                    width: 40,
-                    height: 70,
+                    width: convertWidth(width, 40),
+                    height: convertHeight(height, 70),
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Icon(
@@ -96,11 +99,10 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                   ),
                   Container(
                     alignment: Alignment.bottomCenter,
-                    width: 260,
-                    height: 50,
+                    width: convertWidth(width, 259),
+                    height: convertHeight(height, 50),
                     child: TextField(
                       controller: controlleruser,
-                      keyboardType: TextInputType.emailAddress,
                       textAlignVertical: TextAlignVertical.bottom,
                       decoration: InputDecoration(
                           hintText: 'Nombre',
@@ -117,12 +119,12 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                 ]),
               ),
               SizedBox(
-                width: 300,
-                height: 70,
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 70),
                 child: Row(children: [
                   SizedBox(
-                    width: 40,
-                    height: 70,
+                    width: convertWidth(width, 40),
+                    height: convertHeight(height, 70),
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: const Icon(
@@ -133,8 +135,8 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                   ),
                   Container(
                     alignment: Alignment.bottomCenter,
-                    width: 260,
-                    height: 50,
+                    width: convertWidth(width, 259),
+                    height: convertHeight(height, 50),
                     child: TextField(
                       controller: controlleremail,
                       keyboardType: TextInputType.emailAddress,
@@ -154,13 +156,13 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                 ]),
               ),
               SizedBox(
-                width: 300,
-                height: 70,
+                width: convertWidth(width, 300),
+                height: convertHeight(height, 70),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 40,
-                      height: 70,
+                      width: convertWidth(width, 40),
+                      height: convertHeight(height, 70),
                       child: Container(
                         alignment: Alignment.centerLeft,
                         child: const Icon(
@@ -171,8 +173,8 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                     ),
                     Container(
                       alignment: Alignment.bottomCenter,
-                      width: 220,
-                      height: 50,
+                      width: convertWidth(width, 220),
+                      height: convertHeight(height, 50),
                       child: TextField(
                         controller: controllerpassword,
                         obscureText: _isvisible,
@@ -190,8 +192,8 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                       ),
                     ),
                     SizedBox(
-                      width: 40,
-                      height: 50,
+                      width: convertWidth(width, 40),
+                      height: convertHeight(height, 50),
                       child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -213,23 +215,23 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                 ),
               ),
               SizedBox(
-                width: 350,
-                height: 70,
+                width: convertWidth(width, 350),
+                height: convertHeight(height, 70),
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 350,
+                      width: convertWidth(width, 350),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 193,
+                            width: convertWidth(width, 193),
                             child: Text(
                               'Al registrarse, acepta nuestros',
                               style: EstiloLabelsRegistro.avisoPrimario,
                             ),
                           ),
                           SizedBox(
-                            width: 150,
+                            width: convertWidth(width, 150),
                             child: InkWell(
                               onTap: (() {}),
                               child: Text(
@@ -249,11 +251,11 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                       ),
                     ),
                     SizedBox(
-                      width: 350,
+                      width: convertWidth(width, 350),
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 150,
+                            width: convertWidth(width, 150),
                             child: InkWell(
                               onTap: () {},
                               child: Text(
@@ -270,8 +272,8 @@ class _RegistroViajeroState extends State<RegistroViajero> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 50),
-                width: 300,
-                height: 50,
+                width: convertWidth(width, 350),
+                height: convertHeight(height, 50),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: ElevatedButton(
@@ -311,8 +313,8 @@ class _RegistroViajeroState extends State<RegistroViajero> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 50),
-                width: 130,
-                height: 30,
+                width: convertWidth(width, 133),
+                height: convertHeight(height, 30),
                 child: InkWell(
                   onTap: () {
                     Route route = MaterialPageRoute(
@@ -324,7 +326,7 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Empresa?',
+                        'Empresa? ',
                         style: EstiloLabelsRegistro.viajero,
                       ),
                       Text(

@@ -22,6 +22,7 @@ void showMesajePerfilAgregado(BuildContext context) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.success,
+    confirmBtnText: 'Aceptar',
     text: 'Perfil agregado exitosamente!',
     onConfirmBtnTap: (() {
       Navigator.pop(context);
@@ -34,6 +35,7 @@ void showMesajeErrorRegistro(BuildContext context, String code) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
+    confirmBtnText: 'Aceptar',
     title: 'Oops...',
     text: 'Error $code espera 1 minuto',
   );
@@ -43,6 +45,7 @@ void showMesajeErrorCamposRegistro(BuildContext context) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
+    confirmBtnText: 'Aceptar',
     title: 'Oops...',
     text: 'Revisa tus campos',
   );
@@ -52,6 +55,7 @@ void showMesajeErroPostRegistro(BuildContext context) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
+    confirmBtnText: 'Aceptar',
     title: 'Oops...',
     text: 'Intente en un minuto',
   );

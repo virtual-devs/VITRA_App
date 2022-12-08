@@ -6,6 +6,7 @@ import 'package:vitrapp/styles/colors/colors_base.dart';
 import 'package:vitrapp/styles/colors/colors_card.dart';
 import 'package:vitrapp/styles/colors/colors_efects.dart';
 import 'package:vitrapp/styles/colors/colors_input.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/viajero_views/compra/renta/viajero_compra_viaje.dart';
 
 // ignore: depend_on_referenced_packages
@@ -24,6 +25,8 @@ class CardListaViajes extends StatefulWidget {
 class _CardListaViajesState extends State<CardListaViajes> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: (widget.listResults.isNotEmpty)
           ? ListView.builder(
@@ -32,8 +35,8 @@ class _CardListaViajesState extends State<CardListaViajes> {
                 ResultsViajes data = widget.listResults[index];
                 return Container(
                   margin: const EdgeInsets.only(bottom: 10),
-                  width: 350,
-                  height: 270,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 270),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(15),
@@ -44,8 +47,8 @@ class _CardListaViajesState extends State<CardListaViajes> {
                   child: Stack(
                     children: [
                       Container(
-                        width: 350,
-                        height: 170,
+                        width: convertWidth(width, 350),
+                        height: convertHeight(height, 170),
                         alignment: Alignment.centerRight,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(
@@ -73,8 +76,8 @@ class _CardListaViajesState extends State<CardListaViajes> {
                         bottom: 88,
                         left: 50,
                         child: SizedBox(
-                          width: 300,
-                          height: 180,
+                          width: convertWidth(width, 300),
+                          height: convertHeight(height, 180),
                           child: SvgPicture.asset(
                               'assets/images/card_pressed/card_viaje.svg'),
                         ),
@@ -83,8 +86,8 @@ class _CardListaViajesState extends State<CardListaViajes> {
                         left: 85,
                         top: 130,
                         child: Container(
-                          width: 180,
-                          height: 60,
+                          width: convertWidth(width, 180),
+                          height: convertHeight(height, 60),
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
                               borderRadius: BorderRadius.all(
@@ -114,7 +117,7 @@ class _CardListaViajesState extends State<CardListaViajes> {
                         top: 185,
                         left: 15,
                         child: SizedBox(
-                          width: 240,
+                          width: convertWidth(width, 240),
                           child: Text(
                             '${data.origen}',
                             style: GoogleFonts.mPlusRounded1c(
@@ -132,7 +135,7 @@ class _CardListaViajesState extends State<CardListaViajes> {
                         top: 220,
                         left: 15,
                         child: SizedBox(
-                          width: 200,
+                          width: convertWidth(width, 200),
                           child: Text(
                             '${data.destino}',
                             style: GoogleFonts.mPlusRounded1c(
@@ -150,7 +153,7 @@ class _CardListaViajesState extends State<CardListaViajes> {
                         top: 220,
                         left: 160,
                         child: Container(
-                          width: 180,
+                          width: convertWidth(width, 180),
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
@@ -174,15 +177,15 @@ class _CardListaViajesState extends State<CardListaViajes> {
               },
             )
           : SizedBox(
-              width: 350,
-              height: 480,
+              width: convertWidth(width, 350),
+              height: convertHeight(height, 480),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 200,
-                      height: 200,
+                      width: convertWidth(width, 200),
+                      height: convertHeight(height, 200),
                       child: Lottie.asset('assets/gif/109013-oopsie.json'),
                     ),
                     const Text(

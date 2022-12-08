@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vitrapp/model/historial_renta.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import '../../../styles/colors/colors_efects.dart';
 import '../../../styles/colors/colors_input.dart';
 import '../../../styles/fontstyles/estilo_cards.dart';
@@ -17,6 +18,8 @@ class CardHistorialRenta extends StatefulWidget {
 class _CardHistorialRentaState extends State<CardHistorialRenta> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: ListView.builder(
@@ -30,8 +33,8 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                 margin: (index != (widget.listResults.length - 1))
                     ? const EdgeInsets.only(top: 10)
                     : const EdgeInsets.only(top: 10, bottom: 10),
-                width: 250,
-                height: 170,
+                width: convertWidth(width, 250),
+                height: convertHeight(height, 170),
                 decoration: const BoxDecoration(
                   color: ColorsInput.backgroundinput,
                   borderRadius: BorderRadius.all(
@@ -50,12 +53,12 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 5),
-                      width: 250,
-                      height: 20,
+                      width: convertWidth(width, 250),
+                      height: convertHeight(height, 20),
                       child: Row(
-                        children:  [
+                        children: [
                           SizedBox(
-                            width: 250,
+                            width: convertWidth(width, 250),
                             child: Text(
                               '${data.nombreEmpresa}',
                               textAlign: TextAlign.center,
@@ -67,21 +70,21 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 5),
-                      width: 230,
-                      height: 20,
+                      width: convertWidth(width, 230),
+                      height: convertHeight(height, 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           SizedBox(
-                            width: 60,
-                            child: Text(
+                            width: convertWidth(width, 60),
+                            child: const Text(
                               'Nombre',
                               style: EstiloLabelsHomeEmpresa.primario,
                             ),
                           ),
                           SizedBox(
-                            width: 101,
-                            child: Text(
+                            width: convertWidth(width, 101),
+                            child: const Text(
                               'Fecha de renta',
                               style: EstiloLabelsHomeEmpresa.primario,
                             ),
@@ -91,13 +94,13 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 1),
-                      width: 230,
-                      height: 20,
+                      width: convertWidth(width, 230),
+                      height: convertHeight(height, 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                           SizedBox(
-                            width: 90,
+                          SizedBox(
+                            width: convertWidth(width, 90),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
@@ -107,7 +110,7 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                             ),
                           ),
                           SizedBox(
-                            width: 90,
+                            width: convertWidth(width, 90),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
@@ -121,8 +124,8 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 5),
-                      width: 230,
-                      height: 20,
+                      width: convertWidth(width, 230),
+                      height: convertHeight(height, 20),
                       child: Row(
                         children: const [
                           SizedBox(
@@ -135,8 +138,8 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                       ),
                     ),
                     SizedBox(
-                      width: 200,
-                      height: 20,
+                      width: convertWidth(width, 200),
+                      height: convertHeight(height, 20),
                       child: Row(
                         children: [
                           SizedBox(
@@ -151,24 +154,24 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
                       ),
                     ),
                     SizedBox(
-                      width: 180,
-                      height: 40,
+                      width: convertWidth(width, 180),
+                      height: convertHeight(height, 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             alignment: Alignment.bottomCenter,
-                            width: 30,
-                            height: 30,
+                            width: convertWidth(width, 30),
+                            height: convertHeight(height, 30),
                             child: SvgPicture.asset(
                               'assets/icons/unidades/simbolo_peso.svg',
-                              width: 15,
-                              height: 15,
+                              width: convertWidth(width, 15),
+                              height: convertHeight(height, 15),
                             ),
                           ),
                           SizedBox(
-                            width: 120,
-                            height: 30,
+                            width: convertWidth(width, 120),
+                            height: convertHeight(height, 30),
                             child: Text(
                               '${data.total}.00',
                               style: EstilosCards.labelprecio,

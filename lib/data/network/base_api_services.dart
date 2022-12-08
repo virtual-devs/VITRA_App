@@ -14,9 +14,10 @@ abstract class BaseApiServices {
 
   Future<dynamic> getViajesFecha(String fecha);
 
-  Future<dynamic> postApiHistorialViajes(String body);
+  Future<dynamic> postApiHistorialViajes(
+      String body, String id, String asientos, String dataE);
 
-  Future<dynamic> postApiHistorialRentas(String body);
+  Future<dynamic> postApiHistorialRentas(String body, String id, String dataE);
 
   Future<dynamic> getHistorialRenta(String url, String id);
 
@@ -34,6 +35,13 @@ abstract class BaseApiServices {
 
   Future<dynamic> postLogin(String body);
 
-  Future<dynamic> getGetApiViajesEmpresa(String id);
+  Future<dynamic> getApiViajesEmpresa(String id);
+
   Future<dynamic> getApiTransporteEmpresa(String id);
+
+  Future<dynamic> putApiPerfil(String body, String id);
+
+  Future<dynamic> getApiUsuario(String id);
+
+  Future<dynamic> logut();
 }

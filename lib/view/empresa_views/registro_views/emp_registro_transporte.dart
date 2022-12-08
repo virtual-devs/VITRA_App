@@ -6,6 +6,7 @@ import 'package:vitrapp/styles/colors/colors_base.dart';
 import 'package:vitrapp/styles/colors/colors_botons.dart';
 import 'package:vitrapp/styles/colors/colors_input.dart';
 import 'package:vitrapp/styles/fontstyles/estilo_forms.dart';
+import 'package:vitrapp/util/convert_size.dart';
 
 import 'package:vitrapp/view-model/viajero_view_model.dart';
 
@@ -27,7 +28,7 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
   bool _trasmision = false;
   final String foto = "carro.jpg";
   late String trasmisionSelected = "";
-  final String estatus = "Disponible";
+  final String estatus = "DISPONIBLE";
   late String aireSelected = "";
   final String acSelected = "";
   final modelController = TextEditingController();
@@ -38,6 +39,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SizedBox(
@@ -48,8 +51,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 400,
-                  height: 40,
+                  width: convertWidth(width, 400),
+                  height: convertHeight(height, 40),
                   child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -62,13 +65,13 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                   ),
                 ),
                 SizedBox(
-                  width: 350,
-                  height: 50,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: convertHeight(height, 100),
                         child: Row(
                           children: const [
                             Text(
@@ -94,15 +97,16 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 100),
-                      height: 400,
-                      width: 350,
+                      height: convertHeight(height, 400),
+                      width: convertWidth(width, 350),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 SizedBox(
-                                  child: Text(
+                                  width: convertWidth(width, 340),
+                                  child: const Text(
                                     'Trasmisión',
                                     style: EstiloLabelsFormulario
                                         .labelsprimariosunidades,
@@ -115,8 +119,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -144,8 +148,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -157,8 +161,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        height: 60,
-                                        width: 168,
+                                        height: convertHeight(height, 60),
+                                        width: convertWidth(width, 167),
                                         child: RadioListTile(
                                           toggleable: true,
                                           title: const Text(
@@ -186,10 +190,10 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               margin: const EdgeInsets.only(top: 5),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
-                                    width: 340,
-                                    child: Text(
+                                    width: convertWidth(width, 340),
+                                    child: const Text(
                                       'A/C',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -203,8 +207,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -232,8 +236,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -245,8 +249,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        height: 60,
-                                        width: 168,
+                                        height: convertHeight(height, 60),
+                                        width: convertWidth(width, 167),
                                         child: RadioListTile(
                                           toggleable: true,
                                           title: const Text(
@@ -275,9 +279,9 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const SizedBox(
-                                    width: 170,
-                                    child: Text(
+                                  SizedBox(
+                                    width: convertWidth(width, 170),
+                                    child: const Text(
                                       'Modelo',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -285,7 +289,7 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                   ),
                                   Container(
                                     alignment: Alignment.center,
-                                    width: 170,
+                                    width: convertWidth(width, 170),
                                     child: const Text(
                                       'Numero de asientos',
                                       style: EstiloLabelsFormulario
@@ -300,8 +304,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -323,8 +327,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -334,8 +338,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        height: 60,
-                                        width: 168,
+                                        height: convertHeight(height, 60),
+                                        width: convertWidth(width, 168),
                                         child: TextField(
                                           controller: asientosController,
                                           keyboardType: TextInputType.number,
@@ -361,7 +365,7 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5),
-                              width: 340,
+                              width: convertWidth(width, 340),
                               child: Row(
                                 children: const [
                                   SizedBox(
@@ -379,8 +383,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 340,
-                                  height: 60,
+                                  width: convertWidth(width, 340),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -405,7 +409,7 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5),
-                              width: 340,
+                              width: convertWidth(width, 340),
                               child: Row(
                                 children: const [
                                   SizedBox(
@@ -423,8 +427,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 340,
-                                  height: 200,
+                                  width: convertWidth(width, 340),
+                                  height: convertHeight(height, 200),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -460,8 +464,8 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 60),
-                      width: 220,
-                      height: 60,
+                      width: convertWidth(width, 220),
+                      height: convertHeight(height, 60),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -499,7 +503,7 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               )
                                   .then((value) {
                                 if (value == "200") {
-                                  showMesajeOk(context);
+                                  showMesajeOkRegistro(context);
                                 } else {
                                   debugPrint(value);
                                   showMesajeErrorPost(context);
@@ -540,7 +544,7 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
     String precio,
   ) {
     final body = {
-      "idEmpresa": storage.get(5).toString(),
+      "idEmpresa": id,
       "asientos": int.parse(asientos),
       "transmision": trasmision,
       "aire": aire,

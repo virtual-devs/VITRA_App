@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:vitrapp/alerts/empresa/error_post.dart';
 import 'package:vitrapp/alerts/empresa/ok_viajero.dart';
 import 'package:vitrapp/model/transporte.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view-model/viajero_view_model.dart';
 
 import '../../../styles/colors/colors_base.dart';
@@ -46,6 +47,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SizedBox(
@@ -56,8 +59,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 400,
-                  height: 40,
+                  width: convertWidth(width, 400),
+                  height: convertHeight(height, 40),
                   child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -70,13 +73,13 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                   ),
                 ),
                 SizedBox(
-                  width: 350,
-                  height: 50,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: convertHeight(height, 100),
                         child: Row(
                           children: const [
                             Text(
@@ -94,8 +97,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 100),
-                      height: 400,
-                      width: 350,
+                      height: convertHeight(height, 400),
+                      width: convertWidth(width, 350),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
@@ -115,8 +118,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -144,8 +147,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -157,8 +160,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        height: 60,
-                                        width: 168,
+                                        height: convertHeight(height, 60),
+                                        width: convertWidth(width, 168),
                                         child: RadioListTile(
                                           toggleable: true,
                                           title: const Text(
@@ -186,10 +189,10 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               margin: const EdgeInsets.only(top: 5),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children:  [
                                   SizedBox(
-                                    width: 340,
-                                    child: Text(
+                                    width: convertWidth(width, 340),
+                                    child:const Text(
                                       'A/C',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -203,8 +206,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertWidth(width, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -232,8 +235,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -245,8 +248,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        height: 60,
-                                        width: 168,
+                                        height: convertHeight(height, 60),
+                                        width: convertWidth(width, 168),
                                         child: RadioListTile(
                                           toggleable: true,
                                           title: const Text(
@@ -275,9 +278,9 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const SizedBox(
-                                    width: 170,
-                                    child: Text(
+                                   SizedBox(
+                                    width: convertWidth(width, 170),
+                                    child:const Text(
                                       'Modelo',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -285,7 +288,7 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                   ),
                                   Container(
                                     alignment: Alignment.center,
-                                    width: 170,
+                                    width: convertWidth(width, 170),
                                     child: const Text(
                                       'Numero de asientos',
                                       style: EstiloLabelsFormulario
@@ -300,8 +303,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -323,8 +326,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 170,
-                                  height: 60,
+                                  width: convertWidth(width, 170),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -334,8 +337,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                   child: Row(
                                     children: [
                                       SizedBox(
-                                        height: 60,
-                                        width: 168,
+                                        height: convertHeight(height, 60),
+                                        width: convertWidth(width, 168),
                                         child: TextField(
                                           controller: asientosController,
                                           keyboardType: TextInputType.number,
@@ -361,7 +364,7 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5),
-                              width: 340,
+                              width: convertWidth(width, 340),
                               child: Row(
                                 children: const [
                                   SizedBox(
@@ -379,8 +382,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 340,
-                                  height: 60,
+                                  width: convertWidth(width, 340),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -405,7 +408,7 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5),
-                              width: 340,
+                              width: convertWidth(width, 340),
                               child: Row(
                                 children: const [
                                   SizedBox(
@@ -423,8 +426,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 340,
-                                  height: 200,
+                                  width: convertWidth(width, 340),
+                                  height: convertHeight(height, 200),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -443,8 +446,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                                       ),
                                     ),
                                     keyboardType: TextInputType.multiline,
-                                    maxLines: 3,
-                                    maxLength: 300,
+                                    maxLines: 2,
+                                    maxLength: 100,
                                   ),
                                 ),
                               ],
@@ -460,8 +463,8 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 60),
-                      width: 220,
-                      height: 60,
+                      width: convertWidth(width, 220),
+                      height: convertHeight(height, 60),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

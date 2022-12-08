@@ -16,6 +16,7 @@ bool validarLogin(String username, String password) =>
 void showMesajeErrorLogin(BuildContext context) {
   QuickAlert.show(
     context: context,
+    confirmBtnText: 'Aceptar',
     type: QuickAlertType.error,
     title: 'Oops...',
     text: 'Correo o contraseña incorrecta',
@@ -26,6 +27,7 @@ void showMesajeErrorLoginE(BuildContext context) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
+    confirmBtnText: 'Aceptar',
     title: 'Oops...',
     text: 'Intentalo de nuevo en 1 minuto',
   );
@@ -35,6 +37,7 @@ void showMesajeErrorLoginCampos(BuildContext context) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
+    confirmBtnText: 'Aceptar',
     title: 'Oops...',
     text: 'Revisa los campos',
   );

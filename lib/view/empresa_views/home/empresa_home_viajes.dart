@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/alerts/no_data_viajes.dart';
 
 import 'package:vitrapp/view/empresa_views/items/card_viaje.dart';
@@ -30,6 +31,8 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SingleChildScrollView(
@@ -39,22 +42,22 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
             child: Column(
               children: [
                 SizedBox(
-                  width: 350,
+                  width: width / 1.15,
                   child: Row(
-                    children: const [
+                    children: [
                       SizedBox(
-                        width: 270,
-                        child: Text(
+                        width: width / 1.5,
+                        child: const Text(
                           'Viajes registrados',
                           style: EstiloLabelsUnidades.titulo,
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(5),
                         child: CircleAvatar(
                           radius: 25,
                           backgroundImage: AssetImage(
-                            'assets/images/user_profile/profile.jpg',
+                            'assets/images/avatar/avatar_empresa.png',
                           ),
                         ),
                       )
@@ -71,8 +74,8 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
                       },
                       child: Container(
                         margin: const EdgeInsets.only(top: 10),
-                        width: 350,
-                        height: 500,
+                        width: width / 1.15,
+                        height: height / 1.6,
                         alignment: Alignment.topCenter,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(
@@ -125,8 +128,8 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10),
-                  width: 300,
-                  height: 70,
+                  width: convertWidth(width, 300),
+                  height: convertHeight(height, 70),
                   child: ElevatedButton(
                     onPressed: () {
                       Route route = MaterialPageRoute(
@@ -146,7 +149,7 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 170,
+                          width: convertWidth(width, 170),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: const [

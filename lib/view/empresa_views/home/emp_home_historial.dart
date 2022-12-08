@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/empresa_views/items/card_emp_historial_renta.dart';
 import 'package:vitrapp/view/empresa_views/items/card_emp_historial_viaje.dart';
 
@@ -30,6 +31,8 @@ class _EmpresaHomeHistorialState extends State<EmpresaHomeHistorial> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -55,8 +58,8 @@ class _EmpresaHomeHistorialState extends State<EmpresaHomeHistorial> {
                     Column(
                       children: [
                         SizedBox(
-                          width: 350,
-                          height: 600,
+                          width: convertWidth(width, 350),
+                          height: convertHeight(height, 600),
                           child: ChangeNotifierProvider<ViajeroViewModel>.value(
                             value: viewModel,
                             child: Consumer<ViajeroViewModel>(
@@ -97,8 +100,8 @@ class _EmpresaHomeHistorialState extends State<EmpresaHomeHistorial> {
                     Column(
                       children: [
                         SizedBox(
-                          width: 350,
-                          height: 600,
+                          width: convertWidth(width, 350),
+                          height: convertHeight(height, 600),
                           child: ChangeNotifierProvider<ViajeroViewModel>.value(
                             value: viewModel,
                             child: Consumer<ViajeroViewModel>(

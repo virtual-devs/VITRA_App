@@ -1,12 +1,12 @@
 class Transporte {
   List<Results>? results;
 
-  Transporte.fromJson(List<dynamic> json) {
-    if (json.isNotEmpty) {
+  Transporte.fromJson(Map<String, dynamic> json) {
+    if (json['rows'] != null) {
       results = <Results>[];
-      for (var value in json) {
-        results!.add(Results.fromJson(value));
-      }
+      json['rows'].forEach((data) {
+        results!.add(Results.fromJson(data));
+      });
     }
   }
 

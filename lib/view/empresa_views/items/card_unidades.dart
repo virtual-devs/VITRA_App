@@ -26,6 +26,8 @@ class CardUnidades extends StatefulWidget {
 class _CardUnidadesState extends State<CardUnidades> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: ListView.builder(
@@ -40,8 +42,8 @@ class _CardUnidadesState extends State<CardUnidades> {
               margin: (index == 0)
                   ? const EdgeInsets.only(left: 10, bottom: 10, right: 10)
                   : const EdgeInsets.all(10),
-              height: 170,
-              width: 350,
+              height: height / 4.3,
+              width: width / 1.2,
               decoration: const BoxDecoration(
                 color: ColorsCard.background,
                 borderRadius: BorderRadius.all(
@@ -54,7 +56,7 @@ class _CardUnidadesState extends State<CardUnidades> {
                     children: [
                       SizedBox(
                         height: 170,
-                        width: 180,
+                        width: width / 2.55,
                         child: SvgPicture.asset(
                             'assets/images/card_pressed/card_car.svg'),
                       ),

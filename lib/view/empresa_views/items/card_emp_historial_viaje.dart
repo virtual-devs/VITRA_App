@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:vitrapp/model/historial_viajes.dart';
+import 'package:vitrapp/util/convert_size.dart';
 
 import '../../../styles/colors/colors_card.dart';
 import '../../../styles/colors/colors_efects.dart';
@@ -15,8 +17,11 @@ class CardEmpresaHistorialViaje extends StatefulWidget {
 }
 
 class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
+  final storage = Hive.box('storage');
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView.builder(
         itemCount: widget.listViajes.length,
@@ -28,8 +33,8 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                 margin: (index != 4)
                     ? const EdgeInsets.only(top: 10)
                     : const EdgeInsets.only(top: 10, bottom: 10),
-                width: 270,
-                height: 230,
+                width: convertWidth(width, 270),
+                height: convertHeight(height, 250),
                 decoration: const BoxDecoration(
                     color: ColorsCard.background,
                     borderRadius: BorderRadius.all(
@@ -50,8 +55,8 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(top: 5),
-                          child: const Text(
-                            'Viajes Tuxtla Gtz - Pichucalco',
+                          child: Text(
+                            '${storage.get(1)}',
                             style: EstilosCards.labeltitulo,
                           ),
                         )
@@ -62,7 +67,7 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -76,7 +81,7 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                             ),
                           ),
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: const [
                                 Text(
@@ -94,11 +99,11 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                         Row(
                           children: [
                             SizedBox(
-                              width: 135,
+                              width: convertWidth(width, 135),
                               child: Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  'Erik Toledo Trinidad',
+                                child: Text(
+                                  '${data.nombre}',
                                   overflow: TextOverflow.ellipsis,
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
@@ -109,11 +114,11 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                         Row(
                           children: [
                             SizedBox(
-                              width: 135,
+                              width: convertWidth(width, 135),
                               child: Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  '24/10/2022',
+                                child: Text(
+                                  '${data.fecha}',
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
                               ),
@@ -142,9 +147,9 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
-                          children: const [
+                          children: [
                             Text(
-                              '12:59',
+                              '${data.fecha}',
                               overflow: TextOverflow.ellipsis,
                               style: EstilosCards.labelsecundariocolor,
                             ),
@@ -157,7 +162,7 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -171,7 +176,7 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                             ),
                           ),
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -190,13 +195,13 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  '26/11/2022',
+                                child: Text(
+                                  '${data.fechaSalida}',
                                   overflow: TextOverflow.ellipsis,
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
@@ -205,12 +210,12 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                           ),
                         ),
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
-                                '16:56',
+                                '${data.horaSalida}',
                                 style: EstilosCards.labelsecundariocolor,
                               ),
                             ],
@@ -223,7 +228,7 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               children: [
                                 Container(
@@ -237,7 +242,7 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                             ),
                           ),
                           SizedBox(
-                            width: 135,
+                            width: convertWidth(width, 135),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -254,14 +259,14 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(left: 18),
-                                child: const Text(
-                                  'Tuxtla Gutierrez',
+                                child: Text(
+                                  '${data.origen}',
                                   overflow: TextOverflow.ellipsis,
                                   style: EstilosCards.labelsecundariocolor,
                                 ),
@@ -270,12 +275,12 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                           ),
                         ),
                         SizedBox(
-                          width: 135,
+                          width: convertWidth(width, 135),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Text(
-                                'Pichucalco',
+                                '${data.destino}',
                                 overflow: TextOverflow.ellipsis,
                                 style: EstilosCards.labelsecundariocolor,
                               ),
@@ -283,6 +288,14 @@ class _CardEmpresaHistorialViajeState extends State<CardEmpresaHistorialViaje> {
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      width: convertWidth(width, 120),
+                      height: convertHeight(height, 30),
+                      child: Text(
+                        '\$${data.total}.00',
+                        style: EstilosCards.labelprecio,
+                      ),
                     ),
                   ],
                 ),

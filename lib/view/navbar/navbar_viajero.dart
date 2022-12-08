@@ -73,17 +73,6 @@ class _NavBarViajeroState extends State<NavBarViajero> {
           ),
           label: 'Historial',
         ),
-        BottomNavigationBarItem(
-          icon: SvgPicture.asset(
-            'assets/icons/navbar/icon_user.svg',
-            width: 20,
-            height: 20,
-            color: (index == 4)
-                ? ColorsNavBar.selecteditem
-                : ColorsNavBar.unselecteditem,
-          ),
-          label: "Perfil",
-        ),
       ],
     );
   }

@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view/alerts/no_data_transporte.dart';
 import 'package:vitrapp/view/viajero_views/Items/card_viajero_home_renta.dart';
 import 'package:vitrapp/view/viajero_views/Items/card_viajero_home.dart';
@@ -12,6 +16,7 @@ import '../../../styles/fontstyles/estilo_home_viajero.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view-model/viajero_view_model.dart';
+import '../../login/login.dart';
 
 class ViajeroHome extends StatefulWidget {
   const ViajeroHome({super.key});
@@ -22,11 +27,18 @@ class ViajeroHome extends StatefulWidget {
 
 class _ViajeroHomeState extends State<ViajeroHome> {
   final storage = Hive.box('storage');
+  bool mostrarPerfil = true;
   ViajeroViewModel viajeroViewModel = ViajeroViewModel();
   ViajeroViewModel x = ViajeroViewModel();
-  DateTime fecha = DateTime(2022, 11, 21);
+  DateTime fecha = DateTime.now();
   @override
   void initState() {
+    Timer(const Duration(seconds: 3), () {
+      setState(() {
+        mostrarPerfil = !mostrarPerfil;
+      });
+    });
+
     viajeroViewModel.vmGetTransportesHome();
     viajeroViewModel
         .vmGetViajesFechaHome('${fecha.year}-${fecha.month}-${fecha.day}');
@@ -35,6 +47,8 @@ class _ViajeroHomeState extends State<ViajeroHome> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SizedBox(
@@ -44,8 +58,8 @@ class _ViajeroHomeState extends State<ViajeroHome> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 70,
-                  width: 350,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 70),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -53,7 +67,7 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                              color: ColorBlurEfect.blur,
+                              color: ColorsInput.backgroundinput,
                               boxShadow: [
                                 BoxShadow(
                                   color: ColorBlurEfect.blur,
@@ -63,12 +77,31 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                               ],
                               shape: BoxShape.circle,
                             ),
-                            child: const CircleAvatar(
-                              radius: 40,
-                              backgroundImage: AssetImage(
-                                'assets/images/avatar/avatar_viajero.png',
-                              ),
-                            ),
+                            child: (mostrarPerfil)
+                                ? const CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: AssetImage(
+                                      'assets/images/avatar/avatar_viajero.png',
+                                    ),
+                                  )
+                                : IconButton(
+                                    onPressed: () {
+                                      viajeroViewModel.vmLogout().then((value) {
+                                        if (value.compareTo("200") == 0) {
+                                          storage.clear();
+                                          Route route = MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Login());
+                                          Navigator.push(context, route);
+                                        } else {
+                                          debugPrint("ERROR $value");
+                                        }
+                                      }).onError((error, stackTrace) {
+                                        debugPrint(error.toString());
+                                      });
+                                    },
+                                    icon: const Icon(
+                                        CupertinoIcons.square_arrow_right)),
                           )
                         ],
                       ),
@@ -80,15 +113,15 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 350,
-                        height: 100,
+                        width: convertWidth(width, 350),
+                        height: convertHeight(height, 100),
                         child: Row(
                           children: [
                             Column(
                               children: [
                                 SizedBox(
-                                  width: 210,
-                                  height: 100,
+                                  width: convertWidth(width, 210),
+                                  height: convertHeight(height, 100),
                                   child: Column(
                                     children: [
                                       Row(
@@ -96,8 +129,8 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                                           Container(
                                             margin: const EdgeInsets.only(
                                                 top: 10, right: 5),
-                                            width: 150,
-                                            height: 40,
+                                            width: convertWidth(width, 150),
+                                            height: convertHeight(height, 40),
                                             child: SingleChildScrollView(
                                               scrollDirection: Axis.horizontal,
                                               child: Text(
@@ -111,18 +144,18 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                                           SizedBox(
                                             child: Image.asset(
                                               'assets/images/home_viajero/hv_saludo.png',
-                                              width: 50,
-                                              height: 50,
+                                              width: convertWidth(width, 50),
+                                              height: convertHeight(height, 50),
                                             ),
                                           )
                                         ],
                                       ),
                                       Row(
-                                        children: const [
+                                        children: [
                                           SizedBox(
-                                            width: 200,
-                                            height: 20,
-                                            child: Text(
+                                            width: convertWidth(width, 200),
+                                            height: convertHeight(height, 20),
+                                            child: const Text(
                                               'Bienvenido a VITRA',
                                               style: EstiloLabelsHomeViajero
                                                   .bienvenida,
@@ -143,12 +176,12 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
-                      height: 50,
-                      width: 350,
-                      child: Text(
-                        'Viajes proximos',
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 50),
+                      child: const Text(
+                        'Viajes de hoy',
                         style: EstiloLabelsHomeViajero.encabezados,
                       ),
                     ),
@@ -158,8 +191,8 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 350,
-                      height: 300,
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 300),
                       child: ChangeNotifierProvider<ViajeroViewModel>(
                         create: (context) => viajeroViewModel,
                         child: Consumer<ViajeroViewModel>(
@@ -196,11 +229,11 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
-                      height: 50,
-                      width: 340,
-                      child: Text(
+                      width: convertWidth(width, 340),
+                      height: convertHeight(height, 50),
+                      child: const Text(
                         'Lo mas economico \nen rentas',
                         style: EstiloLabelsHomeViajero.encabezados2,
                       ),
@@ -212,14 +245,14 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(bottom: 10),
-                      width: 350,
-                      height: 300,
+                      width: convertWidth(width, 350),
+                      height: convertHeight(height, 300),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: 350,
-                            height: 300,
+                            width: convertWidth(width, 350),
+                            height: convertHeight(height, 300),
                             child:
                                 ChangeNotifierProvider<ViajeroViewModel>.value(
                               value: viajeroViewModel,

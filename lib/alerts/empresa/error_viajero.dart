@@ -7,6 +7,7 @@ void showMesajeError(BuildContext context) {
   QuickAlert.show(
     context: context,
     type: QuickAlertType.error,
+     confirmBtnText: 'Aceptar',
     title: 'Oops...',
     text: 'Los campos no pueden quedar vacios',
   );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:vitrapp/data/network/network_api_services.dart';
 import 'package:vitrapp/model/historial_renta.dart';
 import 'package:vitrapp/model/login.dart';
+import 'package:vitrapp/model/perfil.dart';
 import 'package:vitrapp/model/transporte.dart';
 import 'package:vitrapp/model/viajes.dart';
 
@@ -20,6 +21,16 @@ class Repository {
     }
   }
 
+  Future<Perfil> getPerfil(String id) async {
+    try {
+      dynamic responseJ = await apiServices.getApiUsuario(id);
+      responseJ = Perfil.fromJson(responseJ);
+      return responseJ;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Transporte> getTransporteEmpresa(String id) async {
     try {
       dynamic responseJ = await apiServices.getApiTransporteEmpresa(id);
@@ -32,7 +43,7 @@ class Repository {
 
   Future<Viajes> getViajesEmpresa(String id) async {
     try {
-      dynamic response = await apiServices.getGetApiViajesEmpresa(id);
+      dynamic response = await apiServices.getApiViajesEmpresa(id);
       return response = Viajes.fromJsonFiltro(response);
     } catch (e) {
       rethrow;
@@ -98,18 +109,21 @@ class Repository {
   }
 
 /*-------------------------------------POST's--------------------------------------*/
-  Future<String> postHistorialV(String data) async {
+  Future<String> postHistorialV(
+      String data, String id, String asientos, String dataE) async {
     try {
-      String responsePH = await apiServices.postApiHistorialViajes(data);
+      String responsePH =
+          await apiServices.postApiHistorialViajes(data, id, asientos, dataE);
       return responsePH;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<String> postHistorialR(String data) async {
+  Future<String> postHistorialR(String data, String id, String dataE) async {
     try {
-      String responsePH = await apiServices.postApiHistorialRentas(data);
+      String responsePH =
+          await apiServices.postApiHistorialRentas(data, id, dataE);
       return responsePH;
     } catch (e) {
       rethrow;
@@ -140,6 +154,24 @@ class Repository {
     try {
       dynamic response = await apiServices.putActulizarViaje(id, body);
 
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> logout() async {
+    try {
+      dynamic response = await apiServices.logut();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> putPerfil(String body, String id) async {
+    try {
+      dynamic response = await apiServices.putApiPerfil(body, id);
       return response;
     } catch (e) {
       rethrow;

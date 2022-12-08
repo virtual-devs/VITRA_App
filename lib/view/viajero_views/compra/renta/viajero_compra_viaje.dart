@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
+import 'package:vitrapp/model/perfil.dart';
 import 'package:vitrapp/model/viajes.dart';
 import 'package:vitrapp/styles/colors/colors_card.dart';
 import 'package:vitrapp/styles/colors/colors_efects.dart';
@@ -11,12 +13,15 @@ import 'package:vitrapp/styles/fontstyles/estilo_cards.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 // ignore: depend_on_referenced_packages
 import 'package:quickalert/quickalert.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view-model/viajero_view_model.dart';
+import '../../../../data/response/status.dart';
 import '../../../../styles/colors/colors_base.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../styles/colors/colors_botons.dart';
+import '../../../alerts/viajero/alerts_compra.dart';
 
 class ViajeroCompraViaje extends StatefulWidget {
   final ResultsViajes item;
@@ -30,9 +35,44 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
   ViajeroViewModel addHistorial = ViajeroViewModel();
   final controllerAsientos = TextEditingController();
   final storage = Hive.box('storage');
+
+  @override
+  void initState() {
+    super.initState();
+    addHistorial.vmGetPerfil(widget.item.nombreEmpresa!);
+  }
+
   @override
   Widget build(BuildContext context) {
     ResultsViajes data = widget.item;
+
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return ChangeNotifierProvider<ViajeroViewModel>(
+      create: (context) => addHistorial,
+      child: Consumer<ViajeroViewModel>(
+        builder: (context, value, child) {
+          switch (value.getPerfilResponse.status!) {
+            case Status.LOADING:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            case Status.COMPLETED:
+              return body(data, value.getPerfilResponse.data!.response![0],
+                  width, height);
+
+            case Status.ERROR:
+              return const Text('');
+            case Status.INITIAL:
+              return const Text('');
+          }
+        },
+      ),
+    );
+  }
+
+  Widget body(
+      ResultsViajes data, ResultsPerfil perfil, double width, double height) {
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SafeArea(
@@ -42,8 +82,8 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
             child: Column(
               children: [
                 SizedBox(
-                  width: 400,
-                  height: 40,
+                  width: convertWidth(width, 400),
+                  height: convertHeight(height, 40),
                   child: Row(
                     children: [
                       IconButton(
@@ -60,13 +100,13 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                   ),
                 ),
                 SizedBox(
-                  width: 350,
-                  height: 80,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 80),
                   child: Row(
                     children: [
                       Container(
                         alignment: Alignment.centerLeft,
-                        width: 80,
+                        width: convertWidth(width, 80),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
@@ -82,17 +122,17 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: 270,
-                            height: 80,
+                            width: convertWidth(width, 270),
+                            height: convertHeight(height, 80),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: 180,
-                                  height: 80,
+                                  width: convertWidth(width, 180),
+                                  height: convertHeight(height, 80),
                                   alignment: Alignment.center,
-                                  child:  Text(
-                                    '${data.nombreEmpresa}',
+                                  child: Text(
+                                    '${perfil.nombre}',
                                     textAlign: TextAlign.center,
                                     style:
                                         EstiloCardPresionada.labelnombrempresa,
@@ -107,8 +147,8 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                   ),
                 ),
                 Container(
-                  width: 350,
-                  height: 250,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 250),
                   margin: const EdgeInsets.only(top: 30),
                   decoration: const BoxDecoration(
                     color: ColorsCard.backgroundcardpresionada,
@@ -127,23 +167,23 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(top: 10),
-                        width: 320,
-                        height: 30,
+                        width: convertWidth(width, 320),
+                        height: convertHeight(height, 30),
                         child: Row(
-                          children: const [
+                          children: [
                             SizedBox(
-                              width: 160,
-                              height: 30,
-                              child: Text(
+                              width: convertWidth(width, 160),
+                              height: convertHeight(height, 30),
+                              child: const Text(
                                 'Origen',
                                 style:
                                     EstiloLabelsCardPresionadaViajes.primarios,
                               ),
                             ),
                             SizedBox(
-                              width: 160,
-                              height: 30,
-                              child: Text(
+                              width: convertWidth(width, 160),
+                              height: convertHeight(height, 30),
+                              child: const Text(
                                 'Destino',
                                 textAlign: TextAlign.center,
                                 style:
@@ -154,13 +194,13 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         ),
                       ),
                       SizedBox(
-                        width: 320,
-                        height: 30,
+                        width: convertWidth(width, 320),
+                        height: convertHeight(height, 30),
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 160,
-                              height: 30,
+                              width: convertWidth(width, 160),
+                              height: convertHeight(height, 30),
                               child: Text(
                                 '${data.origen}',
                                 style: EstiloLabelsCardPresionadaViajes
@@ -168,8 +208,8 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: 160,
-                              height: 30,
+                              width: convertWidth(width, 160),
+                              height: convertHeight(height, 30),
                               child: Text(
                                 '${data.destino}',
                                 textAlign: TextAlign.center,
@@ -182,23 +222,23 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 5),
-                        width: 310,
-                        height: 30,
+                        width: convertWidth(width, 310),
+                        height: convertHeight(height, 30),
                         child: Row(
-                          children: const [
+                          children: [
                             SizedBox(
-                              width: 150,
-                              height: 30,
-                              child: Text(
+                              width: convertWidth(width, 150),
+                              height: convertHeight(height, 30),
+                              child: const Text(
                                 'Fecha',
                                 style:
                                     EstiloLabelsCardPresionadaViajes.primarios,
                               ),
                             ),
                             SizedBox(
-                              width: 160,
-                              height: 30,
-                              child: Text(
+                              width: convertWidth(width, 160),
+                              height: convertHeight(height, 30),
+                              child: const Text(
                                 'Hora',
                                 textAlign: TextAlign.center,
                                 style:
@@ -209,13 +249,13 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         ),
                       ),
                       SizedBox(
-                        width: 310,
-                        height: 30,
+                        width: convertWidth(width, 310),
+                        height: convertHeight(height, 30),
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 150,
-                              height: 30,
+                              width: convertWidth(width, 150),
+                              height: convertHeight(height, 30),
                               child: Text(
                                 '${data.fecha}',
                                 style: EstiloLabelsCardPresionadaViajes
@@ -223,8 +263,8 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: 160,
-                              height: 30,
+                              width: convertWidth(width, 160),
+                              height: convertHeight(height, 30),
                               child: Text(
                                 '${data.hora}',
                                 textAlign: TextAlign.center,
@@ -237,14 +277,14 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 5),
-                        width: 310,
-                        height: 30,
+                        width: convertWidth(width, 310),
+                        height: convertHeight(height, 30),
                         child: Row(
-                          children: const [
+                          children: [
                             SizedBox(
-                              width: 100,
-                              height: 30,
-                              child: SingleChildScrollView(
+                              width: convertWidth(width, 100),
+                              height: convertHeight(height, 30),
+                              child: const SingleChildScrollView(
                                 child: Text(
                                   'Asientos disp.',
                                   textAlign: TextAlign.center,
@@ -258,15 +298,15 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         ),
                       ),
                       SizedBox(
-                        width: 320,
-                        height: 80,
+                        width: convertWidth(width, 320),
+                        height: convertHeight(height, 80),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               alignment: Alignment.center,
-                              width: 120,
-                              height: 80,
+                              width: convertWidth(width, 120),
+                              height: convertHeight(height, 80),
                               child: Text(
                                 '${data.asientosDisp}',
                                 textAlign: TextAlign.center,
@@ -276,17 +316,17 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                             ),
                             Container(
                               alignment: Alignment.bottomCenter,
-                              width: 10,
-                              height: 20,
+                              width: convertWidth(width, 10),
+                              height: convertHeight(height, 20),
                               child: SvgPicture.asset(
                                 'assets/icons/unidades/simbolo_peso.svg',
-                                height: 15,
-                                width: 15,
+                                height: convertWidth(width, 15),
+                                width: convertHeight(height, 15),
                               ),
                             ),
                             SizedBox(
-                              width: 190,
-                              height: 70,
+                              width: convertWidth(width, 190),
+                              height: convertHeight(height, 70),
                               child: Text(
                                 '${data.precio}.00',
                                 textAlign: TextAlign.center,
@@ -301,22 +341,24 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30),
-                  width: 350,
-                  height: 70,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 70),
                   child: Row(
                     children: [
-                      const SizedBox(
-                        width: 30,
-                        child: Icon(
+                      SizedBox(
+                        width: convertWidth(width, 30),
+                        child: const Icon(
                           Icons.location_on,
                         ),
                       ),
-                      SizedBox(
-                        width: 320,
-                        height: 100,
+                      Container(
+                        alignment: Alignment.center,
+                        width: convertWidth(width, 320),
+                        height: convertHeight(height, 100),
                         child: Text(
-                          'Calle Segunda Pte. Nte. 342-2, Niño de Atocha, 29037 Tuxtla Gutiérrez, Chis.'
-                              .toUpperCase(),
+                          (perfil.direccion?.compareTo('null') == 0)
+                              ? "Sin direccion alguna".toUpperCase()
+                              : perfil.direccion!.toUpperCase(),
                           style: EstiloLabelsCardPresionadaViajes.ubicacion,
                         ),
                       )
@@ -325,21 +367,21 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30),
-                  width: 350,
-                  height: 90,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 90),
                   child: Column(
                     children: [
-                      const SizedBox(
-                        width: 350,
-                        child: Text(
+                      SizedBox(
+                        width: convertWidth(width, 350),
+                        child: const Text(
                           '¿ # de asientos a comprar?',
                           style: EstiloLabelsCardPresionadaViajes.asientos,
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 5),
-                        width: 350,
-                        height: 60,
+                        width: convertWidth(width, 350),
+                        height: convertHeight(height, 60),
                         child: TextField(
                           controller: controllerAsientos,
                           keyboardType: TextInputType.number,
@@ -363,7 +405,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30),
-                  width: 350,
+                  width: convertWidth(width, 350),
                   child: Row(
                     children: [
                       Column(
@@ -371,7 +413,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                           Column(
                             children: [
                               SizedBox(
-                                width: 350,
+                                width: convertWidth(width, 350),
                                 child: SlideAction(
                                   sliderRotate: false,
                                   text: 'Desliza para rentar',
@@ -381,10 +423,11 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                                     Icons.payment,
                                     color: ColorsPago.terceario,
                                   ),
-                                  onSubmit: () {
+                                  onSubmit: () async {
                                     if (validar(controllerAsientos.text)) {
                                       showConfirmarCompra(data, addHistorial,
-                                          controllerAsientos.text);
+                                          controllerAsientos.text, perfil);
+                                      await addHistorial.vmGetViajes();
                                     } else {
                                       showMensajeError();
                                     }
@@ -406,19 +449,6 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
     );
   }
 
-  void showConfirmation() {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      title: 'Hecho',
-      text: '¡Renta compra se ha realizado exitosamente!',
-      onConfirmBtnTap: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      },
-    );
-  }
-
   bool validar(String asientos) {
     return (asientos.isNotEmpty &&
             int.parse(asientos) > 0 &&
@@ -432,6 +462,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
       context: context,
       type: QuickAlertType.error,
       title: 'Oops...',
+      confirmBtnText: 'Aceptar',
       text: '¡El numero ingresado no es valido!',
       onConfirmBtnTap: () {
         Navigator.pop(context);
@@ -470,41 +501,48 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
     });
   }
 
-  void showMensajeErrorPost(String codigo) {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.error,
-      title: 'Oops...',
-      text: '¡Ha ocurrido un error: $codigo!',
-    );
-  }
-
-  void post(ResultsViajes data, ViajeroViewModel addHistorial, double total) {
+  void post(ResultsViajes data, ViajeroViewModel addHistorial, double total,
+      String asientos, ResultsPerfil perfil) {
     DateTime fecha = DateTime.now();
     TimeOfDay hora = TimeOfDay.now();
 
     addHistorial
-        .vmPostHistorialV(parseo(
-            int.parse(storage.get(5)),
-            data.nombreEmpresa.toString(),
-            storage.get(1),
-            "${fecha.year}-${fecha.month}-${fecha.day}-",
-            "${hora.hour}:${hora.minute}",
-            convertirfecha(data.fecha.toString()),
-            convertirhora(data.hora.toString()),
-            data.origen.toString(),
-            data.destino.toString(),
-            total))
+        .vmPostHistorialV(
+            parseo(
+                int.parse(storage.get(5)),
+                "${perfil.nombre}",
+                storage.get(1),
+                "${fecha.year}-${fecha.month}-${fecha.day}-",
+                "${hora.hour}:${hora.minute}",
+                convertirfecha(data.fecha.toString()),
+                convertirhora(data.hora.toString()),
+                data.origen.toString(),
+                data.destino.toString(),
+                total),
+            "${data.id}",
+            asientos,
+            parseo(
+                int.parse(data.nombreEmpresa.toString()),
+                data.nombreEmpresa.toString(),
+                storage.get(1),
+                "${fecha.year}-${fecha.month}-${fecha.day}-",
+                "${hora.hour}:${hora.minute}",
+                convertirfecha(data.fecha.toString()),
+                convertirhora(data.hora.toString()),
+                data.origen.toString(),
+                data.destino.toString(),
+                total))
         .then((value) {
-      debugPrint(value);
-      (value == "200") ? showConfirmation() : showMensajeErrorPost(value);
+      (value == "200")
+          ? showConfirmation(context)
+          : showMensajeErrorPost(context, value);
     }).onError((error, stackTrace) {
-      showMensajeErrorPost(error.toString());
+      showMensajeErrorPost(context, error.toString());
     });
   }
 
-  void showConfirmarCompra(
-      ResultsViajes data, ViajeroViewModel addHistorial, String asientos) {
+  void showConfirmarCompra(ResultsViajes data, ViajeroViewModel addHistorial,
+      String asientos, ResultsPerfil perfil) {
     double total = double.parse("${data.precio}.00") * int.parse(asientos);
     QuickAlert.show(
       context: context,
@@ -515,8 +553,12 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
       confirmBtnText: 'Comprar',
       cancelBtnText: 'Cancelar',
       onConfirmBtnTap: () {
-        post(data, addHistorial, total);
+        post(data, addHistorial, total, asientos, perfil);
         Navigator.pop(context);
+      },
+      onCancelBtnTap: () {
+        Navigator.pop(context);
+        showMensajeCancelCompra(context);
       },
       confirmBtnColor: Colors.green,
     );

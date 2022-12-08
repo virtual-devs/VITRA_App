@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:vitrapp/styles/colors/colors_base.dart';
+import 'package:vitrapp/util/convert_size.dart';
 import 'package:vitrapp/view-model/viajero_view_model.dart';
 import 'package:vitrapp/view/login/logueo.dart';
 import 'package:vitrapp/view/login/parseo.dart';
@@ -32,6 +33,8 @@ class _LoginState extends State<Login> {
   final controllerpassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -40,9 +43,9 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.only(top: 200),
-                width: 300,
-                height: 550,
+                margin: EdgeInsets.only(top: margin(height, 200)),
+                width: convertWidth(width, 350),
+                height: convertHeight(height, 550),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -58,12 +61,12 @@ class _LoginState extends State<Login> {
                     Column(
                       children: [
                         SizedBox(
-                          width: 300,
-                          height: 70,
+                          width: convertWidth(width, 300),
+                          height: convertHeight(height, 70),
                           child: Row(children: [
                             SizedBox(
-                              width: 30,
-                              height: 70,
+                              width: convertWidth(width, 30),
+                              height: convertHeight(height, 70),
                               child: Container(
                                 alignment: Alignment.centerLeft,
                                 child: const Icon(
@@ -74,8 +77,8 @@ class _LoginState extends State<Login> {
                             ),
                             Container(
                               alignment: Alignment.bottomCenter,
-                              width: 270,
-                              height: 50,
+                              width: convertWidth(width, 269),
+                              height: convertHeight(height, 50),
                               child: TextField(
                                 keyboardType: TextInputType.emailAddress,
                                 controller: controlleremail,
@@ -95,12 +98,12 @@ class _LoginState extends State<Login> {
                           ]),
                         ),
                         SizedBox(
-                          width: 300,
-                          height: 70,
+                          width: convertWidth(width, 300),
+                          height: convertHeight(height, 70),
                           child: Row(children: [
                             SizedBox(
-                              width: 30,
-                              height: 70,
+                              width: convertWidth(width, 30),
+                              height: convertHeight(height, 70),
                               child: Container(
                                 alignment: Alignment.centerLeft,
                                 child: const Icon(
@@ -111,8 +114,8 @@ class _LoginState extends State<Login> {
                             ),
                             Container(
                               alignment: Alignment.bottomCenter,
-                              width: 200,
-                              height: 50,
+                              width: convertWidth(width, 199),
+                              height: convertHeight(height, 50),
                               child: TextField(
                                 controller: controllerpassword,
                                 obscureText: _isvisible,
@@ -131,8 +134,8 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                             SizedBox(
-                              width: 70,
-                              height: 50,
+                              width: convertWidth(width, 70),
+                              height: convertHeight(height, 50),
                               child: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -155,14 +158,14 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     SizedBox(
-                      width: 300,
-                      height: 70,
+                      width: convertWidth(width, 300),
+                      height: convertHeight(height, 70),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SizedBox(
-                            width: 115,
-                            height: 70,
+                            width: convertWidth(width, 115),
+                            height: convertHeight(height, 70),
                             child: Text(
                               '¿Has olividado tu contraseña?',
                               style: GoogleFonts.nunitoSans(
@@ -176,8 +179,8 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Container(
-                      width: 300,
-                      height: 60,
+                      width: convertWidth(width, 300),
+                      height: convertHeight(height, 60),
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       child: ElevatedButton(
@@ -229,8 +232,8 @@ class _LoginState extends State<Login> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 10),
-                      width: 150,
-                      height: 40,
+                      width: convertWidth(width, 150),
+                      height: convertHeight(height, 40),
                       child: InkWell(
                         onTap: () {
                           Route route = MaterialPageRoute(
@@ -264,17 +267,17 @@ class _LoginState extends State<Login> {
                     Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: SizedBox(
-                        width: 300,
+                        width: convertWidth(width, 300),
                         child: Row(
                           children: [
-                            const SizedBox(
-                              width: 130,
-                              child: Divider(
+                            SizedBox(
+                              width: convertWidth(width, 129),
+                              child: const Divider(
                                 thickness: 1,
                               ),
                             ),
                             SizedBox(
-                              width: 40,
+                              width: convertWidth(width, 40),
                               child: Text(
                                 'O',
                                 textAlign: TextAlign.center,
@@ -284,9 +287,9 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 130,
-                              child: Divider(
+                            SizedBox(
+                              width: convertWidth(width, 130),
+                              child: const Divider(
                                 thickness: 1,
                               ),
                             ),
@@ -296,8 +299,8 @@ class _LoginState extends State<Login> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 10),
-                      width: 150,
-                      height: 50,
+                      width: convertWidth(width, 150),
+                      height: convertHeight(height, 50),
                       child: InkWell(
                         onTap: () {
                           Route route = MaterialPageRoute(

@@ -5,6 +5,7 @@ import 'package:vitrapp/alerts/empresa/ok_viajero.dart';
 import 'package:vitrapp/alerts/empresa/error_post.dart';
 import 'package:vitrapp/alerts/empresa/error_viajero.dart';
 import 'package:vitrapp/model/viajes.dart';
+import 'package:vitrapp/util/convert_size.dart';
 
 import '../../../styles/colors/colors_base.dart';
 import '../../../styles/colors/colors_botons.dart';
@@ -47,6 +48,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: ColorsInput.backgroundinput,
       body: SingleChildScrollView(
@@ -57,8 +60,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 400,
-                  height: 40,
+                  width: convertWidth(width, 400),
+                  height: convertHeight(height, 40),
                   child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -71,13 +74,13 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                   ),
                 ),
                 SizedBox(
-                  width: 350,
-                  height: 50,
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 50),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        height: 100,
+                        height: convertHeight(height, 100),
                         child: Row(
                           children: const [
                             Text(
@@ -95,8 +98,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 105),
-                      height: 430,
-                      width: 350,
+                      height: convertHeight(height, 430),
+                      width: convertWidth(width, 350),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
@@ -116,8 +119,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 350,
-                                  height: 60,
+                                  width: convertWidth(width, 350),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -143,10 +146,10 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                               margin: const EdgeInsets.only(top: 5),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   SizedBox(
-                                    width: 340,
-                                    child: Text(
+                                    width: convertWidth(width, 340),
+                                    child: const Text(
                                       'Destino',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -160,8 +163,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 350,
-                                  height: 60,
+                                  width: convertWidth(width, 350),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -189,9 +192,9 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const SizedBox(
-                                    width: 115,
-                                    child: Text(
+                                  SizedBox(
+                                    width: convertWidth(width, 115),
+                                    child: const Text(
                                       'Fecha',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -199,16 +202,16 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                                   ),
                                   Container(
                                     alignment: Alignment.center,
-                                    width: 115,
+                                    width: convertWidth(width, 115),
                                     child: const Text(
                                       'Hora',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 115,
-                                    child: Text(
+                                  SizedBox(
+                                    width: convertWidth(width, 115),
+                                    child: const Text(
                                       'Num de asientos',
                                       textAlign: TextAlign.center,
                                       style: EstiloLabelsFormulario
@@ -223,8 +226,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 115,
-                                  height: 60,
+                                  width: convertWidth(width, 115),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: const BorderRadius.all(
@@ -249,12 +252,12 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                                             });
                                           },
                                         )
-                                      : mostrarfecha(),
+                                      : mostrarfecha(width, height),
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 113,
-                                  height: 60,
+                                  width: convertWidth(width, 113),
+                                  height: convertHeight(height, 60),
                                   decoration: BoxDecoration(
                                       color: ColorsInput.backgroundinput,
                                       borderRadius: const BorderRadius.all(
@@ -278,12 +281,12 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                                             });
                                           },
                                         )
-                                      : mostrarhora(),
+                                      : mostrarhora(width, height),
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 113,
-                                  height: 60,
+                                  width: convertWidth(width, 113),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -310,7 +313,7 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 5),
-                              width: 340,
+                              width: convertWidth(width, 340),
                               child: Row(
                                 children: const [
                                   SizedBox(
@@ -328,8 +331,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                               children: [
                                 Container(
                                   margin: const EdgeInsets.only(top: 10),
-                                  width: 340,
-                                  height: 60,
+                                  width: convertWidth(width, 340),
+                                  height: convertHeight(height, 60),
                                   decoration: const BoxDecoration(
                                     color: ColorsInput.backgroundinput,
                                     borderRadius: BorderRadius.all(
@@ -363,8 +366,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 30),
-                      width: 220,
-                      height: 60,
+                      width: convertWidth(width, 220),
+                      height: convertHeight(height, 60),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -419,7 +422,7 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
     );
   }
 
-  Widget mostrarfecha() {
+  Widget mostrarfecha(double width, double height) {
     return InkWell(
       onTap: () async {
         DateTime? nuevaFecha = await getDate();
@@ -430,8 +433,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 115,
-        height: 60,
+        width: convertWidth(width, 115),
+        height: convertHeight(height, 60),
         child: Text(
           '${fecha.day}/${fecha.month}/${fecha.year}',
           textAlign: TextAlign.center,
@@ -445,7 +448,7 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
     );
   }
 
-  Widget mostrarhora() {
+  Widget mostrarhora(double width, double height) {
     return InkWell(
       onTap: () async {
         TimeOfDay? nuevoTiempo = await getTiempo();
@@ -456,8 +459,8 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 115,
-        height: 60,
+        width: convertWidth(width, 115),
+        height: convertHeight(height, 60),
         child: Text(
           '${tiempo.hour}:${tiempo.minute}',
           textAlign: TextAlign.center,

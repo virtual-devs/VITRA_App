@@ -4,7 +4,6 @@ import 'package:vitrapp/view/viajero_views/home/viajero_home.dart';
 import 'package:vitrapp/view/viajero_views/home/viajero_home_transportes.dart';
 import 'package:vitrapp/view/viajero_views/home/viajero_home_viajes.dart';
 
-import '../view/empresa_views/registro_views/emp_registro_transporte.dart';
 import '../view/viajero_views/home/viajero_home_historial.dart';
 
 class RouteViajero extends StatelessWidget {
@@ -19,7 +18,6 @@ class RouteViajero extends StatelessWidget {
       const ViajeroHomeTransporte(),
       const ViajeroHome(),
       const ViajeroHomeHistorial(),
-      const RegistroTransporte(),
     ];
     return listaViews[index];
   }

@@ -1,11 +1,11 @@
 class Viajes {
   List<ResultsViajes>? results;
-  Viajes.fromJson(List<dynamic> json) {
-    if (json.isNotEmpty) {
+  Viajes.fromJson(Map<String, dynamic> json) {
+    if (json['rows'] != null) {
       results = <ResultsViajes>[];
-      for (var value in json) {
-        results!.add(ResultsViajes.fromJson(value));
-      }
+      json['rows'].forEach((data) {
+        results!.add(ResultsViajes.fromJson(data));
+      });
     }
   }
 

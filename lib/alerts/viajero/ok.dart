@@ -6,6 +6,7 @@ void showMesajeOkViajero(BuildContext context) {
     context: context,
     type: QuickAlertType.success,
     text: 'Viaje agregado exitosamente!',
+    confirmBtnText: 'Aceptar',
     onConfirmBtnTap: (() {
       Navigator.pop(context);
       Navigator.pop(context);
