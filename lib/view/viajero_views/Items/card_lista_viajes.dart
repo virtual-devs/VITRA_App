@@ -34,7 +34,9 @@ class _CardListaViajesState extends State<CardListaViajes> {
               itemBuilder: (context, index) {
                 ResultsViajes data = widget.listResults[index];
                 return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: (index == widget.listResults.length - 1)
+                      ? const EdgeInsets.only(bottom: 40)
+                      : const EdgeInsets.only(bottom: 10),
                   width: convertWidth(width, 350),
                   height: convertHeight(height, 270),
                   decoration: BoxDecoration(

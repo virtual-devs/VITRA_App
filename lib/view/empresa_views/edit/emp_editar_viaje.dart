@@ -365,7 +365,7 @@ class _EmpresaEditarViajeState extends State<EmpresaEditarViaje> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 30),
+                      margin: const EdgeInsets.only(top: 30, bottom: 10),
                       width: convertWidth(width, 220),
                       height: convertHeight(height, 60),
                       child: ElevatedButton(

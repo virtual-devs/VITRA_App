@@ -42,3 +42,16 @@ void showMensajeCancelCompra(BuildContext context) {
     },
   );
 }
+
+void showMensajeWapp(BuildContext context, String numero) {
+  QuickAlert.show(
+    context: context,
+    type: QuickAlertType.error,
+    title: 'Error en el numero telefonico.',
+    text: '¡Al parecer el numero $numero no esta registrado en WhatsApp! ',
+    confirmBtnText: 'Aceptar',
+    onConfirmBtnTap: () {
+      Navigator.pop(context);
+    },
+  );
+}

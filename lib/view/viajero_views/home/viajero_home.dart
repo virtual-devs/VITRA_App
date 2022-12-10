@@ -38,7 +38,6 @@ class _ViajeroHomeState extends State<ViajeroHome> {
         mostrarPerfil = !mostrarPerfil;
       });
     });
-
     viajeroViewModel.vmGetTransportesHome();
     viajeroViewModel
         .vmGetViajesFechaHome('${fecha.year}-${fecha.month}-${fecha.day}');
@@ -92,7 +91,8 @@ class _ViajeroHomeState extends State<ViajeroHome> {
                                           Route route = MaterialPageRoute(
                                               builder: (context) =>
                                                   const Login());
-                                          Navigator.push(context, route);
+                                          Navigator.pushAndRemoveUntil(context,
+                                              route, ((route) => false));
                                         } else {
                                           debugPrint("ERROR $value");
                                         }

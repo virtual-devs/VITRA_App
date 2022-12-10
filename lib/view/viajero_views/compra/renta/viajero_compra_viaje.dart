@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vitrapp/model/perfil.dart';
 import 'package:vitrapp/model/viajes.dart';
 import 'package:vitrapp/styles/colors/colors_card.dart';
@@ -122,7 +123,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: convertWidth(width, 270),
+                            width: convertWidth(width, 268),
                             height: convertHeight(height, 80),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -172,7 +173,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: convertWidth(width, 160),
+                              width: convertWidth(width, 159),
                               height: convertHeight(height, 30),
                               child: const Text(
                                 'Origen',
@@ -181,7 +182,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: convertWidth(width, 160),
+                              width: convertWidth(width, 159),
                               height: convertHeight(height, 30),
                               child: const Text(
                                 'Destino',
@@ -199,7 +200,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: convertWidth(width, 160),
+                              width: convertWidth(width, 159),
                               height: convertHeight(height, 30),
                               child: Text(
                                 '${data.origen}',
@@ -208,7 +209,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: convertWidth(width, 160),
+                              width: convertWidth(width, 159),
                               height: convertHeight(height, 30),
                               child: Text(
                                 '${data.destino}',
@@ -227,7 +228,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: convertWidth(width, 150),
+                              width: convertWidth(width, 149),
                               height: convertHeight(height, 30),
                               child: const Text(
                                 'Fecha',
@@ -236,7 +237,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: convertWidth(width, 160),
+                              width: convertWidth(width, 159),
                               height: convertHeight(height, 30),
                               child: const Text(
                                 'Hora',
@@ -254,7 +255,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: convertWidth(width, 150),
+                              width: convertWidth(width, 149),
                               height: convertHeight(height, 30),
                               child: Text(
                                 '${data.fecha}',
@@ -263,7 +264,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: convertWidth(width, 160),
+                              width: convertWidth(width, 159),
                               height: convertHeight(height, 30),
                               child: Text(
                                 '${data.hora}',
@@ -325,7 +326,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                               ),
                             ),
                             SizedBox(
-                              width: convertWidth(width, 190),
+                              width: convertWidth(width, 189),
                               height: convertHeight(height, 70),
                               child: Text(
                                 '${data.precio}.00',
@@ -362,6 +363,40 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                           style: EstiloLabelsCardPresionadaViajes.ubicacion,
                         ),
                       )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: convertWidth(width, 370),
+                  height: convertHeight(height, 40),
+                  child: Row(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        child: IconButton(
+                            onPressed: () async {
+                              // ignore: deprecated_member_use
+                              if (!await canLaunch(
+                                      'whatsapp://send?phone="+52${perfil.telefono}+"&text=') &&
+                                  "${perfil.telefono}".compareTo('null') != 0) {
+                                // ignore: deprecated_member_use
+                                await launch(
+                                    'https://wa.me/${perfil.telefono}');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "La empresa no cuenta con numero telefonico")));
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.whatsapp,
+                              color: Colors.green,
+                            )),
+                      ),
+                      ("${perfil.telefono}".compareTo('null') != 0)
+                          ? Text('Contacto por WHATSAPP ${perfil.telefono}')
+                          : const Text('Numero no disponible'),
                     ],
                   ),
                 ),
@@ -404,7 +439,7 @@ class _ViajeroCompraViajeState extends State<ViajeroCompraViaje> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 30),
+                  margin: const EdgeInsets.only(top: 30, bottom: 10),
                   width: convertWidth(width, 350),
                   child: Row(
                     children: [

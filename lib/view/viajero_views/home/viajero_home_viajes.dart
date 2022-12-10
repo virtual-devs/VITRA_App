@@ -41,7 +41,6 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SizedBox(
           width: double.infinity,
@@ -362,7 +361,7 @@ class _ViajeroHomeViajesState extends State<ViajeroHomeViajes> {
                         ),
                         Container(
                           alignment: Alignment.center,
-                          width: convertWidth(width, 248),
+                          width: convertWidth(width, 247),
                           height: convertHeight(height, 60),
                           child: Text(
                             "${fecha.day}/${fecha.month}/${fecha.year}",

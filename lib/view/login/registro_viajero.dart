@@ -317,6 +317,7 @@ class _RegistroViajeroState extends State<RegistroViajero> {
                 height: convertHeight(height, 30),
                 child: InkWell(
                   onTap: () {
+                    Navigator.pop(context);
                     Route route = MaterialPageRoute(
                       builder: (context) => const RegistroEmpresa(),
                     );

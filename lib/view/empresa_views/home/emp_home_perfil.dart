@@ -22,7 +22,7 @@ class EmpresaPerfil extends StatefulWidget {
 class _EmpresaPerfilState extends State<EmpresaPerfil> {
   bool change = false;
   ViajeroViewModel get = ViajeroViewModel();
-  final controllerCorreo = TextEditingController();
+  final controllerDireccion = TextEditingController();
   final controllerNumero = TextEditingController();
   final storage = Hive.box('storage');
   @override
@@ -66,11 +66,33 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
                                 onPressed: () {
                                   setState(() {
                                     change = !change;
+                                    if (change == true &&
+                                        get.getPerfilResponse.data!.response !=
+                                            null) {
+                                      controllerDireccion.text = get
+                                          .getPerfilResponse
+                                          .data!
+                                          .response![0]
+                                          .direccion
+                                          .toString();
+                                      controllerNumero.text = get
+                                          .getPerfilResponse
+                                          .data!
+                                          .response![0]
+                                          .telefono
+                                          .toString();
+                                    }
                                   });
                                 },
                                 icon: const Icon(CupertinoIcons.pencil_circle),
                               )
-                            : const Text('Editando'),
+                            : IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    change = !change;
+                                  });
+                                },
+                                icon: const Icon(CupertinoIcons.clear)),
                       )
                     ],
                   ),
@@ -99,11 +121,14 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
                                       height,
                                       value
                                           .getPerfilResponse.data!.response![0])
-                                  : editPerfil(width, height),
+                                  : editPerfil(
+                                      width,
+                                      height,
+                                    ),
                             );
 
                           case Status.ERROR:
-                            return Text('data');
+                            return const Text('data');
                           case Status.INITIAL:
                             return const Center(
                               child: CircularProgressIndicator(
@@ -127,7 +152,8 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
                                 storage.clear();
                                 Route route = MaterialPageRoute(
                                     builder: (context) => const Login());
-                                Navigator.push(context, route);
+                                Navigator.pushAndRemoveUntil(
+                                    context, route, ((route) => false));
                               } else {
                                 debugPrint("ERROR $value");
                               }
@@ -141,12 +167,12 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: ColorsBase.colorsecundario),
                           onPressed: () {
-                            if (validar(controllerCorreo.text,
+                            if (validar(controllerDireccion.text,
                                     controllerNumero.text) &&
                                 change == true) {
                               get
                                   .vmPutPerfil(
-                                      parse(controllerCorreo.text,
+                                      parse(controllerDireccion.text,
                                           controllerNumero.text),
                                       storage.get(5))
                                   .then((value) {
@@ -154,7 +180,7 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
                                     ? debugPrint("Actualizado")
                                     : debugPrint("error");
                                 setState(() {
-                                  controllerCorreo.text = "";
+                                  controllerDireccion.text = "";
                                   controllerNumero.text = "";
                                 });
                               }).onError((error, stackTrace) {
@@ -163,7 +189,7 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
                             } else {}
                             setState(() {
                               change = !change;
-                              controllerCorreo.text = "";
+                              controllerDireccion.text = "";
                               controllerNumero.text = "";
                             });
                           },
@@ -246,7 +272,7 @@ class _EmpresaPerfilState extends State<EmpresaPerfil> {
           width: convertWidth(width, 300),
           height: convertHeight(height, 100),
           child: TextField(
-            controller: controllerCorreo,
+            controller: controllerDireccion,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: 'Direccion',

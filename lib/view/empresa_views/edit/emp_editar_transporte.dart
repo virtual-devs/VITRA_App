@@ -189,10 +189,10 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               margin: const EdgeInsets.only(top: 5),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children:  [
+                                children: [
                                   SizedBox(
                                     width: convertWidth(width, 340),
-                                    child:const Text(
+                                    child: const Text(
                                       'A/C',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -278,9 +278,9 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                   SizedBox(
+                                  SizedBox(
                                     width: convertWidth(width, 170),
-                                    child:const Text(
+                                    child: const Text(
                                       'Modelo',
                                       style: EstiloLabelsFormulario
                                           .labelsprimariosunidades,
@@ -462,7 +462,7 @@ class _EmpresaEditarTransporteState extends State<EmpresaEditarTransporte> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 60),
+                      margin: const EdgeInsets.only(top: 60, bottom: 10),
                       width: convertWidth(width, 220),
                       height: convertHeight(height, 60),
                       child: ElevatedButton(

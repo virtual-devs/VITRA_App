@@ -21,7 +21,6 @@ class _CardHistorialRentaState extends State<CardHistorialRenta> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: ColorsInput.backgroundinput,
       body: ListView.builder(
         itemCount: widget.listResults.length,
         itemBuilder: (context, index) {

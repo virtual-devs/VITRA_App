@@ -42,11 +42,11 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
             child: Column(
               children: [
                 SizedBox(
-                  width: width / 1.15,
+                  width: convertWidth(width, 300),
                   child: Row(
                     children: [
                       SizedBox(
-                        width: width / 1.5,
+                        width: convertWidth(width, 239),
                         child: const Text(
                           'Viajes registrados',
                           style: EstiloLabelsUnidades.titulo,
@@ -74,8 +74,8 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
                       },
                       child: Container(
                         margin: const EdgeInsets.only(top: 10),
-                        width: width / 1.15,
-                        height: height / 1.6,
+                        width: convertWidth(width, 280),
+                        height: convertHeight(height, 465),
                         alignment: Alignment.topCenter,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(
@@ -101,6 +101,7 @@ class _EmpresaHomeViajeState extends State<EmpresaHomeViaje> {
                                           listViajes: value
                                               .getViajesResponse.data!.results!,
                                           delete: viajeroViewModel,
+                                          view: "viajes",
                                         )
                                       : nodataviajes();
 

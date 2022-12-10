@@ -2,13 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:vitrapp/util/convert_size.dart';
-import 'package:vitrapp/view/empresa_views/items/card_renta_home.dart';
 
+import '../../../data/response/status.dart';
+import '../../../styles/colors/colors_base.dart';
 import '../../../styles/colors/colors_efects.dart';
 import '../../../styles/colors/colors_input.dart';
 import '../../../styles/fontstyles/estilo_home_viajero.dart';
-import '../items/card_viajes_home.dart';
+import '../../../view-model/viajero_view_model.dart';
+import '../items/card_emp_historial_renta.dart';
+import '../items/card_viaje.dart';
 
 class HomeEmpresa extends StatefulWidget {
   const HomeEmpresa({super.key});
@@ -19,6 +23,17 @@ class HomeEmpresa extends StatefulWidget {
 
 class _HomeEmpresaState extends State<HomeEmpresa> {
   final storage = Hive.box('storage');
+  DateTime fecha = DateTime.now();
+  ViajeroViewModel get = ViajeroViewModel();
+
+  @override
+  void initState() {
+    get.vmGetViajesId(storage.get(5));
+    get.vmGetHistorialRenta(
+        "http://44.212.111.181/historialRE/", storage.get(5));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -132,7 +147,7 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                       height: convertHeight(height, 50),
                       width: convertWidth(width, 350),
                       child: const Text(
-                        'Rentas de hoy',
+                        'Algunas rentas',
                         style: EstiloLabelsHomeViajero.encabezados,
                       ),
                     ),
@@ -144,7 +159,40 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                     SizedBox(
                       width: convertWidth(width, 350),
                       height: convertHeight(height, 200),
-                      child: const CardRentaHome(),
+                      child: ChangeNotifierProvider<ViajeroViewModel>.value(
+                        value: get,
+                        child: Consumer<ViajeroViewModel>(
+                          builder: (context, value, _) {
+                            switch (value.getHistorialRentaResponse.status!) {
+                              case Status.LOADING:
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                      color: ColorsBase.colorsecundario),
+                                );
+                              case Status.COMPLETED:
+                                return CardEmpresaHistorialRenta(
+                                    listHistorial: value
+                                        .getHistorialRentaResponse
+                                        .data!
+                                        .results!,
+                                    view: "home");
+
+                              case Status.ERROR:
+                                return Center(
+                                  child: Text(value
+                                      .getHistorialRentaResponse.message
+                                      .toString()),
+                                );
+                              case Status.INITIAL:
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                      backgroundColor:
+                                          ColorsBase.colorsecundario),
+                                );
+                            }
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -155,21 +203,55 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
                       height: convertHeight(height, 40),
                       width: convertWidth(width, 350),
                       child: const Text(
-                        'Viajes de hoy',
+                        'Viajes agregados',
                         style: EstiloLabelsHomeViajero.encabezados,
                       ),
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: convertWidth(width, 350),
-                      height: convertHeight(height, 220),
-                      child: const CardViajesHome(),
+                SizedBox(
+                  width: convertWidth(width, 350),
+                  height: convertHeight(height, 300),
+                  child: ChangeNotifierProvider<ViajeroViewModel>(
+                    create: (context) => get,
+                    child: Consumer<ViajeroViewModel>(
+                      builder: (context, value, _) {
+                        switch (value.getViajesResponse.status!) {
+                          case Status.LOADING:
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: ColorsBase.colorsecundario,
+                              ),
+                            );
+                          case Status.COMPLETED:
+                            return (value.getViajesResponse.data!.results !=
+                                    null)
+                                ? CardViaje(
+                                    listViajes:
+                                        value.getViajesResponse.data!.results!,
+                                    delete: get,
+                                    view: "home",
+                                  )
+                                : const Center(
+                                    child:
+                                        Text('No tiene ningun viaje agregado'));
+
+                          case Status.ERROR:
+                            return Center(
+                              child: Text(
+                                value.getViajesResponse.message.toString(),
+                              ),
+                            );
+                          case Status.INITIAL:
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                backgroundColor: ColorsBase.colorsecundario,
+                              ),
+                            );
+                        }
+                      },
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

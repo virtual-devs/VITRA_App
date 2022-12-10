@@ -472,11 +472,11 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               borderRadius: BorderRadius.circular(15)),
                           backgroundColor: ColorsBotons.registro,
                         ),
-                        onPressed: () => {
-                          aireSelected = (_ac == false) ? "Si" : "No",
+                        onPressed: () async {
+                          aireSelected = (_ac == false) ? "Si" : "No";
                           trasmisionSelected = (_trasmision == false)
                               ? 'Estandar'
-                              : "Automatico",
+                              : "Automatico";
                           if (validar(
                               storage.get(5).toString(),
                               asientosController.text,
@@ -486,34 +486,33 @@ class _RegistroTransporteState extends State<RegistroTransporte> {
                               foto,
                               detallesController.text,
                               estatus,
-                              precioController.text))
-                            {
-                              viajeroViewModel
-                                  .vmPostTransporte(
-                                jsonBody(
-                                    storage.get(5).toString(),
-                                    asientosController.text,
-                                    trasmisionSelected,
-                                    aireSelected,
-                                    modelController.text,
-                                    foto,
-                                    detallesController.text,
-                                    estatus,
-                                    precioController.text),
-                              )
-                                  .then((value) {
-                                if (value == "200") {
-                                  showMesajeOkRegistro(context);
-                                } else {
-                                  debugPrint(value);
-                                  showMesajeErrorPost(context);
-                                }
-                              }).onError((error, stackTrace) {
+                              precioController.text)) {
+                            await viajeroViewModel
+                                .vmPostTransporte(
+                              jsonBody(
+                                  storage.get(5).toString(),
+                                  asientosController.text,
+                                  trasmisionSelected,
+                                  aireSelected,
+                                  modelController.text,
+                                  foto,
+                                  detallesController.text,
+                                  estatus,
+                                  precioController.text),
+                            )
+                                .then((value) {
+                              if (value == "200") {
+                                showMesajeOkRegistro(context);
+                              } else {
+                                debugPrint(value);
                                 showMesajeErrorPost(context);
-                              })
-                            }
-                          else
-                            {showMesajeError(context)}
+                              }
+                            }).onError((error, stackTrace) {
+                              showMesajeErrorPost(context);
+                            });
+                          } else {
+                            showMesajeError(context);
+                          }
                         },
                         child: const Text(
                           'Registrar',

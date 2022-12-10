@@ -42,11 +42,11 @@ class _EmpresaHomeTransporteState extends State<EmpresaHomeTransporte> {
           child: Column(
             children: [
               SizedBox(
-                width: width / 1.15,
+                width: convertWidth(width, 315),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: width / 1.5,
+                      width: convertWidth(width, 240),
                       child: const Text(
                         'Unidades registradas',
                         style: EstiloLabelsUnidades.titulo,
@@ -79,8 +79,8 @@ class _EmpresaHomeTransporteState extends State<EmpresaHomeTransporte> {
                     },
                     child: Container(
                       margin: const EdgeInsets.only(top: 10),
-                      width: width / 1.15,
-                      height: height / 1.6,
+                      width: convertWidth(width, 315),
+                      height: convertHeight(height, 465),
                       alignment: Alignment.topCenter,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -109,7 +109,9 @@ class _EmpresaHomeTransporteState extends State<EmpresaHomeTransporte> {
                                             .results!,
                                         edit: viajeroViewModel,
                                       )
-                                    : nodatatransporte();
+                                    : const Center(
+                                        child: Text(
+                                            'No tiene ningun transporte agregado'));
 
                               case Status.ERROR:
                                 return nodatatransporte();

@@ -73,10 +73,12 @@ class _EmpresaHomeHistorialState extends State<EmpresaHomeHistorial> {
                                     );
                                   case Status.COMPLETED:
                                     return CardEmpresaHistorialRenta(
-                                        listHistorial: value
-                                            .getHistorialRentaResponse
-                                            .data!
-                                            .results!);
+                                      listHistorial: value
+                                          .getHistorialRentaResponse
+                                          .data!
+                                          .results!,
+                                      view: "historial",
+                                    );
 
                                   case Status.ERROR:
                                     return Center(

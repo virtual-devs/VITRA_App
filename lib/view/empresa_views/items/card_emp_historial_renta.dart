@@ -11,7 +11,9 @@ import '../../../styles/fontstyles/estilo_cards.dart';
 
 class CardEmpresaHistorialRenta extends StatefulWidget {
   final List<ResultsHistorialRenta> listHistorial;
-  const CardEmpresaHistorialRenta({super.key, required this.listHistorial});
+  final String view;
+  const CardEmpresaHistorialRenta(
+      {super.key, required this.listHistorial, required this.view});
 
   @override
   State<CardEmpresaHistorialRenta> createState() =>
@@ -19,177 +21,351 @@ class CardEmpresaHistorialRenta extends StatefulWidget {
 }
 
 class _CardEmpresaHistorialRentaState extends State<CardEmpresaHistorialRenta> {
+  final storage = Hive.box('storage');
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final storage = Hive.box('storage');
+
     return Scaffold(
       body: ListView.builder(
-        itemCount: widget.listHistorial.length,
+        scrollDirection: (widget.view.compareTo('home') == 0)
+            ? Axis.horizontal
+            : Axis.vertical,
+        itemCount: (widget.view.compareTo('home') == 0 &&
+                widget.listHistorial.length > 2)
+            ? 3
+            : widget.listHistorial.length,
         itemBuilder: (context, index) {
           ResultsHistorialRenta data = widget.listHistorial[index];
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: (index != widget.listHistorial.length - 1)
-                    ? const EdgeInsets.only(top: 10)
-                    : const EdgeInsets.only(top: 10, bottom: 10),
-                width: convertWidth(width, 250),
-                height: convertHeight(height, 170),
-                decoration: const BoxDecoration(
-                  color: ColorsInput.backgroundinput,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(9),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 11,
-                      offset: Offset(0, 5),
-                      spreadRadius: -1,
-                      color: ColorBlurEfect.blur,
-                    )
-                  ],
-                ),
-                child: Column(
+          return (widget.view.compareTo('home') != 0)
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 5),
+                      margin: (index != widget.listHistorial.length - 1)
+                          ? const EdgeInsets.only(top: 10)
+                          : const EdgeInsets.only(top: 10, bottom: 10),
                       width: convertWidth(width, 250),
-                      height: convertHeight(height, 20),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: convertWidth(width, 250),
-                            child: Text(
-                              '${storage.get(1)}',
-                              textAlign: TextAlign.center,
-                              style: EstiloLabelsHistorial.titulo,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      width: convertWidth(width, 230),
-                      height: convertHeight(height, 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: convertWidth(width, 60),
-                            child: const Text(
-                              'Nombre',
-                              style: EstiloLabelsHomeEmpresa.primario,
-                            ),
-                          ),
-                          SizedBox(
-                            width: convertWidth(width, 101),
-                            child: const Text(
-                              'Fecha de renta',
-                              style: EstiloLabelsHomeEmpresa.primario,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 1),
-                      width: convertWidth(width, 230),
-                      height: convertHeight(height, 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: convertWidth(width, 90),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text(
-                                '${data.nombre}',
-                                style: EstiloLabelsHomeEmpresa.secundarios,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: convertWidth(width, 90),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text(
-                                '${data.fecha}',
-                                style: EstiloLabelsHomeEmpresa.secundarios,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      width: convertWidth(width, 230),
-                      height: convertHeight(height, 20),
-                      child: Row(
-                        children: const [
-                          SizedBox(
-                            child: Text(
-                              'Días de renta',
-                              style: EstiloLabelsHomeEmpresa.primario,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: convertWidth(width, 200),
-                      height: convertHeight(height, 20),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: convertWidth(width, 60),
-                            child: Text(
-                              '${data.dias}',
-                              textAlign: TextAlign.center,
-                              style: EstilosCards.labelsecundarios,
-                            ),
+                      height: convertHeight(height, 170),
+                      decoration: const BoxDecoration(
+                        color: ColorsInput.backgroundinput,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(9),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 11,
+                            offset: Offset(0, 5),
+                            spreadRadius: -1,
+                            color: ColorBlurEfect.blur,
                           )
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      width: convertWidth(width, 180),
-                      height: convertHeight(height, 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Column(
                         children: [
                           Container(
-                            alignment: Alignment.bottomCenter,
-                            width: convertWidth(width, 30),
-                            height: convertHeight(height, 30),
-                            child: SvgPicture.asset(
-                              'assets/icons/unidades/simbolo_peso.svg',
-                              width: convertWidth(width, 15),
-                              height: convertHeight(height, 15),
+                            margin: const EdgeInsets.only(top: 5),
+                            width: convertWidth(width, 250),
+                            height: convertHeight(height, 20),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: convertWidth(width, 250),
+                                  child: Text(
+                                    '${storage.get(1)}',
+                                    textAlign: TextAlign.center,
+                                    style: EstiloLabelsHistorial.titulo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            width: convertWidth(width, 230),
+                            height: convertHeight(height, 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: convertWidth(width, 60),
+                                  child: const Text(
+                                    'Nombre',
+                                    style: EstiloLabelsHomeEmpresa.primario,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: convertWidth(width, 101),
+                                  child: const Text(
+                                    'Fecha de renta',
+                                    style: EstiloLabelsHomeEmpresa.primario,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 1),
+                            width: convertWidth(width, 230),
+                            height: convertHeight(height, 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: convertWidth(width, 90),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Text(
+                                      '${data.nombre}',
+                                      style:
+                                          EstiloLabelsHomeEmpresa.secundarios,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: convertWidth(width, 90),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Text(
+                                      '${data.fecha}',
+                                      style:
+                                          EstiloLabelsHomeEmpresa.secundarios,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            width: convertWidth(width, 230),
+                            height: convertHeight(height, 20),
+                            child: Row(
+                              children: const [
+                                SizedBox(
+                                  child: Text(
+                                    'Días de renta',
+                                    style: EstiloLabelsHomeEmpresa.primario,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
-                            width: convertWidth(width, 120),
-                            height: convertHeight(height, 30),
-                            child: Text(
-                              '${data.total}.00',
-                              style: EstilosCards.labelprecio,
+                            width: convertWidth(width, 200),
+                            height: convertHeight(height, 20),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: convertWidth(width, 60),
+                                  child: Text(
+                                    '${data.dias}',
+                                    textAlign: TextAlign.center,
+                                    style: EstilosCards.labelsecundarios,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: convertWidth(width, 180),
+                            height: convertHeight(height, 40),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  width: convertWidth(width, 30),
+                                  height: convertHeight(height, 30),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/unidades/simbolo_peso.svg',
+                                    width: convertWidth(width, 15),
+                                    height: convertHeight(height, 15),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: convertWidth(width, 120),
+                                  height: convertHeight(height, 30),
+                                  child: Text(
+                                    '${data.total}.00',
+                                    style: EstilosCards.labelprecio,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ],
+                )
+              : body2(width, height, index, data);
+        },
+      ),
+    );
+  }
+
+  Row body2(
+      double width, double height, int index, ResultsHistorialRenta data) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: (index != widget.listHistorial.length - 1)
+              ? const EdgeInsets.only(left: 10)
+              : const EdgeInsets.only(left: 10, right: 10),
+          width: convertWidth(width, 250),
+          height: convertHeight(height, 170),
+          decoration: const BoxDecoration(
+            color: ColorsInput.backgroundinput,
+            borderRadius: BorderRadius.all(
+              Radius.circular(9),
+            ),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 11,
+                offset: Offset(0, 5),
+                spreadRadius: -1,
+                color: ColorBlurEfect.blur,
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 5),
+                width: convertWidth(width, 250),
+                height: convertHeight(height, 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: convertWidth(width, 250),
+                      child: Text(
+                        '${storage.get(1)}',
+                        textAlign: TextAlign.center,
+                        style: EstiloLabelsHistorial.titulo,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 5),
+                width: convertWidth(width, 230),
+                height: convertHeight(height, 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: convertWidth(width, 60),
+                      child: const Text(
+                        'Nombre',
+                        style: EstiloLabelsHomeEmpresa.primario,
+                      ),
+                    ),
+                    SizedBox(
+                      width: convertWidth(width, 101),
+                      child: const Text(
+                        'Fecha de renta',
+                        style: EstiloLabelsHomeEmpresa.primario,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 1),
+                width: convertWidth(width, 230),
+                height: convertHeight(height, 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: convertWidth(width, 90),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          '${data.nombre}',
+                          style: EstiloLabelsHomeEmpresa.secundarios,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: convertWidth(width, 90),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          '${data.fecha}',
+                          style: EstiloLabelsHomeEmpresa.secundarios,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 5),
+                width: convertWidth(width, 230),
+                height: convertHeight(height, 20),
+                child: Row(
+                  children: const [
+                    SizedBox(
+                      child: Text(
+                        'Días de renta',
+                        style: EstiloLabelsHomeEmpresa.primario,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: convertWidth(width, 200),
+                height: convertHeight(height, 20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: convertWidth(width, 60),
+                      child: Text(
+                        '${data.dias}',
+                        textAlign: TextAlign.center,
+                        style: EstilosCards.labelsecundarios,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: convertWidth(width, 180),
+                height: convertHeight(height, 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      width: convertWidth(width, 30),
+                      height: convertHeight(height, 30),
+                      child: SvgPicture.asset(
+                        'assets/icons/unidades/simbolo_peso.svg',
+                        width: convertWidth(width, 15),
+                        height: convertHeight(height, 15),
+                      ),
+                    ),
+                    SizedBox(
+                      width: convertWidth(width, 120),
+                      height: convertHeight(height, 30),
+                      child: Text(
+                        '${data.total}.00',
+                        style: EstilosCards.labelprecio,
                       ),
                     ),
                   ],
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        ),
+      ],
     );
   }
 }
